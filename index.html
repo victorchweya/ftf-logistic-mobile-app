@@ -1,0 +1,317 @@
+<html lang="en" vid="0"><head vid="1">
+    <meta charset="UTF-8" vid="2">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" vid="3">
+    <title vid="4">Hybrid Driver Dashboard</title>
+    <script src="https://cdn.tailwindcss.com/3.4.17" vid="5"></script>
+    <style vid="6">
+        
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .no-scrollbar {
+            -ms-overflow-style: none;  
+            scrollbar-width: none;  
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-950 font-sans antialiased w-full h-full min-h-screen flex flex-col overflow-hidden selection:bg-[#1B4332] selection:text-white" vid="7">
+
+    
+    <header class="sticky top-0 z-20 flex h-16 w-full shrink-0 items-center justify-between border-b border-slate-200 bg-white px-4 shadow-sm" vid="8">
+        <div class="flex items-center gap-2.5" vid="9">
+            <div class="flex h-8 w-8 items-center justify-center rounded-lg bg-[#1B4332] shadow-sm" vid="10">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" vid="11">
+                    <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" vid="12"></path>
+                    <polyline points="3.27 6.96 12 12.01 20.73 6.96" vid="13"></polyline>
+                    <line x1="12" y1="22.08" x2="12" y2="12" vid="14"></line>
+                </svg>
+            </div>
+            <span class="text-xl font-bold tracking-tight text-slate-900" vid="15">Hybrid</span>
+        </div>
+        <div class="flex items-center gap-4" vid="16">
+            <button class="relative flex h-9 w-9 items-center justify-center rounded-full text-slate-500 hover:bg-slate-100 hover:text-slate-900 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1B4332]" vid="17">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" vid="18">
+                    <path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9" vid="19"></path>
+                    <path d="M10.3 21a1.94 1.94 0 0 0 3.4 0" vid="20"></path>
+                </svg>
+                <span class="absolute right-2 top-2 flex h-2 w-2 rounded-full bg-red-500 ring-2 ring-white" vid="21"></span>
+            </button>
+            <div class="relative flex h-9 w-9 shrink-0 overflow-hidden rounded-full border border-slate-200 bg-slate-100" vid="22">
+                <img src="https://ui-avatars.com/api/?name=Harvey+Hybrid&amp;background=1B4332&amp;color=fff&amp;font-size=0.35&amp;bold=true" alt="Harvey Hybrid" class="aspect-square h-full w-full object-cover" vid="23">
+            </div>
+        </div>
+    </header>
+
+    
+    <main class="flex-1 overflow-y-auto w-full no-scrollbar pb-24" vid="24">
+        <div class="p-4 space-y-6" vid="25">
+
+            
+            <section class="space-y-1" vid="26">
+                <h1 class="text-2xl font-semibold tracking-tight text-slate-900" vid="27">Hi, Harvey</h1>
+                <p class="text-sm text-slate-500" vid="28">Here's your route overview for today.</p>
+            </section>
+
+            
+            <section class="grid grid-cols-2 gap-4" vid="29">
+                <div class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm transition-all hover:shadow-md" vid="30">
+                    <div class="flex items-center justify-between" vid="31">
+                        <h3 class="text-sm font-medium text-slate-500" vid="32">Assigned</h3>
+                        <div class="flex h-8 w-8 items-center justify-center rounded-md bg-[#1B4332]/10 text-[#1B4332]" vid="33">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" vid="34">
+                                <polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21" vid="35"></polygon>
+                                <line x1="9" x2="9" y1="3" y2="18" vid="36"></line>
+                                <line x1="15" x2="15" y1="6" y2="21" vid="37"></line>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="mt-3 flex items-baseline gap-2" vid="38">
+                        <span class="text-2xl font-bold tracking-tight text-slate-900" vid="39">5</span>
+                        <span class="text-xs text-slate-500" vid="40">routes</span>
+                    </div>
+                </div>
+                <div class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm transition-all hover:shadow-md" vid="41">
+                    <div class="flex items-center justify-between" vid="42">
+                        <h3 class="text-sm font-medium text-slate-500" vid="43">Completed</h3>
+                        <div class="flex h-8 w-8 items-center justify-center rounded-md bg-green-100 text-green-700" vid="44">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" vid="45">
+                                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" vid="46"></path>
+                                <polyline points="22 4 12 14.01 9 11.01" vid="47"></polyline>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="mt-3 flex items-baseline gap-2" vid="48">
+                        <span class="text-2xl font-bold tracking-tight text-slate-900" vid="49">1</span>
+                        <span class="text-xs text-slate-500" vid="50">route</span>
+                    </div>
+                </div>
+            </section>
+
+            
+            <section class="space-y-3" vid="51">
+                <h2 class="text-sm font-semibold uppercase tracking-wider text-slate-500" vid="52">Current Objective</h2>
+                <div class="rounded-xl border border-[#1B4332]/20 bg-white shadow-sm overflow-hidden ring-1 ring-black/5" vid="53">
+                    <div class="bg-[#1B4332]/5 px-4 py-3 border-b border-[#1B4332]/10 flex items-center justify-between" vid="54">
+                        <div class="flex items-center gap-2" vid="55">
+                            <span class="font-semibold text-[#1B4332]" vid="56">Next Stop • R-312</span>
+                        </div>
+                        <span class="inline-flex items-center rounded-full border border-transparent bg-[#1B4332] px-2.5 py-0.5 text-xs font-semibold text-white shadow-sm" vid="57">
+                            Active
+                        </span>
+                    </div>
+                    <div class="p-5 space-y-5" vid="58">
+                        <div class="flex items-start gap-3.5" vid="59">
+                            <div class="mt-0.5 flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-[#1B4332]/10 text-[#1B4332]" vid="60">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" vid="61">
+                                    <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" vid="62"></path>
+                                    <circle cx="12" cy="10" r="3" vid="63"></circle>
+                                </svg>
+                            </div>
+                            <div class="space-y-1" vid="64">
+                                <p class="text-base font-semibold leading-none text-slate-900" vid="65">123 Logistics Avenue</p>
+                                <p class="text-sm text-slate-500" vid="66">Business District, City 45678</p>
+                            </div>
+                        </div>
+                        <button class="inline-flex h-11 w-full items-center justify-center rounded-md bg-[#1B4332] px-8 py-2 text-sm font-medium text-white shadow transition-colors hover:bg-[#1B4332]/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#1B4332] focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50" vid="67">
+                            Open Current Stop
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            
+            <section class="space-y-4" vid="68">
+                <div class="flex items-center justify-between" vid="69">
+                    <h2 class="text-lg font-semibold tracking-tight text-slate-900" vid="70">Your Routes</h2>
+                </div>
+
+                
+                <div class="inline-flex h-10 w-full items-center justify-center rounded-lg bg-slate-200/60 p-1 text-slate-500" vid="71">
+                    <button class="inline-flex w-full items-center justify-center whitespace-nowrap rounded-md bg-white px-3 py-1.5 text-sm font-medium text-slate-950 shadow-sm ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50" vid="72">
+                        All
+                    </button>
+                    <button class="inline-flex w-full items-center justify-center whitespace-nowrap rounded-md px-3 py-1.5 text-sm font-medium ring-offset-background transition-all hover:bg-slate-200/40 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50" vid="73">
+                        Delivery
+                    </button>
+                    <button class="inline-flex w-full items-center justify-center whitespace-nowrap rounded-md px-3 py-1.5 text-sm font-medium ring-offset-background transition-all hover:bg-slate-200/40 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50" vid="74">
+                        Collection
+                    </button>
+                    <button class="inline-flex w-full items-center justify-center whitespace-nowrap rounded-md px-3 py-1.5 text-sm font-medium ring-offset-background transition-all hover:bg-slate-200/40 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50" vid="75">
+                        Mixed
+                    </button>
+                </div>
+
+                
+                <div class="space-y-3" vid="76">
+                    
+                    
+                    <div class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm transition-all hover:border-slate-300" vid="77">
+                        <div class="mb-4 flex items-center justify-between" vid="78">
+                            <div class="flex items-center gap-3" vid="79">
+                                <span class="font-semibold text-slate-900" vid="80">R-312</span>
+                                <span class="inline-flex items-center rounded-full border border-transparent bg-[#1B4332] px-2 py-0.5 text-[11px] font-semibold text-white" vid="81">Active</span>
+                            </div>
+                            <button class="inline-flex h-8 items-center justify-center rounded-md border border-slate-200 bg-white px-3 text-xs font-medium text-slate-900 shadow-sm transition-colors hover:bg-slate-100 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950" vid="82">
+                                Details
+                            </button>
+                        </div>
+                        <div class="grid grid-cols-3 gap-2" vid="83">
+                            <div class="flex flex-col items-start gap-1 rounded-lg bg-slate-50 p-2.5" vid="84">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-500 mb-0.5" vid="85"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2" vid="86"></path><path d="M15 18H9" vid="87"></path><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14" vid="88"></path><circle cx="17" cy="18" r="2" vid="89"></circle><circle cx="7" cy="18" r="2" vid="90"></circle></svg>
+                                <span class="text-xs font-medium text-slate-700" vid="91">Heavy Van</span>
+                            </div>
+                            <div class="flex flex-col items-start gap-1 rounded-lg bg-slate-50 p-2.5" vid="92">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-500 mb-0.5" vid="93"><path d="m7.5 4.27 9 5.15" vid="94"></path><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z" vid="95"></path><path d="m3.3 7 8.7 5 8.7-5" vid="96"></path><path d="M12 22V12" vid="97"></path></svg>
+                                <span class="text-xs font-medium text-slate-700" vid="98">7 stops</span>
+                            </div>
+                            <div class="flex flex-col items-start gap-1 rounded-lg bg-slate-50 p-2.5" vid="99">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-500 mb-0.5" vid="100"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z" vid="101"></path><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z" vid="102"></path><path d="M7 21h10" vid="103"></path><path d="M12 3v18" vid="104"></path><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2" vid="105"></path></svg>
+                                <span class="text-xs font-medium text-slate-700" vid="106">450 kg</span>
+                            </div>
+                        </div>
+                        <div class="mt-3 flex items-center gap-2 rounded-md bg-[#1B4332]/5 px-3 py-2 text-xs font-medium text-[#1B4332]" vid="107">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" vid="108"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z" vid="109"></path><circle cx="12" cy="13" r="3" vid="110"></circle></svg>
+                            Proof of delivery required
+                        </div>
+                    </div>
+
+                    
+                    <div class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm transition-all hover:border-slate-300" vid="111">
+                        <div class="mb-4 flex items-center justify-between" vid="112">
+                            <div class="flex items-center gap-3" vid="113">
+                                <span class="font-semibold text-slate-900" vid="114">R-318</span>
+                                <span class="inline-flex items-center rounded-full border border-transparent bg-slate-100 px-2 py-0.5 text-[11px] font-semibold text-slate-600" vid="115">Completed</span>
+                            </div>
+                            <button class="inline-flex h-8 items-center justify-center rounded-md border border-slate-200 bg-white px-3 text-xs font-medium text-slate-900 shadow-sm transition-colors hover:bg-slate-100 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950" vid="116">
+                                Details
+                            </button>
+                        </div>
+                        <div class="grid grid-cols-3 gap-2" vid="117">
+                            <div class="flex flex-col items-start gap-1 rounded-lg bg-slate-50 p-2.5" vid="118">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-500 mb-0.5" vid="119"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2" vid="120"></path><path d="M15 18H9" vid="121"></path><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14" vid="122"></path><circle cx="17" cy="18" r="2" vid="123"></circle><circle cx="7" cy="18" r="2" vid="124"></circle></svg>
+                                <span class="text-xs font-medium text-slate-700" vid="125">Van</span>
+                            </div>
+                            <div class="flex flex-col items-start gap-1 rounded-lg bg-slate-50 p-2.5" vid="126">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-500 mb-0.5" vid="127"><path d="m7.5 4.27 9 5.15" vid="128"></path><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z" vid="129"></path><path d="m3.3 7 8.7 5 8.7-5" vid="130"></path><path d="M12 22V12" vid="131"></path></svg>
+                                <span class="text-xs font-medium text-slate-700" vid="132">3 stops</span>
+                            </div>
+                            <div class="flex flex-col items-start gap-1 rounded-lg bg-slate-50 p-2.5" vid="133">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-500 mb-0.5" vid="134"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z" vid="135"></path><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z" vid="136"></path><path d="M7 21h10" vid="137"></path><path d="M12 3v18" vid="138"></path><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2" vid="139"></path></svg>
+                                <span class="text-xs font-medium text-slate-700" vid="140">150 kg</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm transition-all hover:border-slate-300" vid="141">
+                        <div class="mb-4 flex items-center justify-between" vid="142">
+                            <div class="flex items-center gap-3" vid="143">
+                                <span class="font-semibold text-slate-900" vid="144">R-322</span>
+                                <span class="inline-flex items-center rounded-full border border-transparent bg-blue-50 px-2 py-0.5 text-[11px] font-semibold text-blue-700" vid="145">Assigned</span>
+                            </div>
+                            <button class="inline-flex h-8 items-center justify-center rounded-md border border-slate-200 bg-white px-3 text-xs font-medium text-slate-900 shadow-sm transition-colors hover:bg-slate-100 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950" vid="146">
+                                Details
+                            </button>
+                        </div>
+                        <div class="grid grid-cols-3 gap-2" vid="147">
+                            <div class="flex flex-col items-start gap-1 rounded-lg bg-slate-50 p-2.5" vid="148">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-500 mb-0.5" vid="149"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2" vid="150"></path><path d="M15 18H9" vid="151"></path><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14" vid="152"></path><circle cx="17" cy="18" r="2" vid="153"></circle><circle cx="7" cy="18" r="2" vid="154"></circle></svg>
+                                <span class="text-xs font-medium text-slate-700" vid="155">Heavy Van</span>
+                            </div>
+                            <div class="flex flex-col items-start gap-1 rounded-lg bg-slate-50 p-2.5" vid="156">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-500 mb-0.5" vid="157"><path d="m7.5 4.27 9 5.15" vid="158"></path><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z" vid="159"></path><path d="m3.3 7 8.7 5 8.7-5" vid="160"></path><path d="M12 22V12" vid="161"></path></svg>
+                                <span class="text-xs font-medium text-slate-700" vid="162">8 stops</span>
+                            </div>
+                            <div class="flex flex-col items-start gap-1 rounded-lg bg-slate-50 p-2.5" vid="163">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-500 mb-0.5" vid="164"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z" vid="165"></path><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z" vid="166"></path><path d="M7 21h10" vid="167"></path><path d="M12 3v18" vid="168"></path><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2" vid="169"></path></svg>
+                                <span class="text-xs font-medium text-slate-700" vid="170">510 kg</span>
+                            </div>
+                        </div>
+                        <div class="mt-3 flex items-center gap-2 rounded-md bg-[#1B4332]/5 px-3 py-2 text-xs font-medium text-[#1B4332]" vid="171">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" vid="172"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z" vid="173"></path><circle cx="12" cy="13" r="3" vid="174"></circle></svg>
+                            Proof of delivery required
+                        </div>
+                    </div>
+
+                    
+                    <div class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm transition-all hover:border-slate-300" vid="175">
+                        <div class="mb-4 flex items-center justify-between" vid="176">
+                            <div class="flex items-center gap-3" vid="177">
+                                <span class="font-semibold text-slate-900" vid="178">R-324</span>
+                                <span class="inline-flex items-center rounded-full border border-transparent bg-amber-50 px-2 py-0.5 text-[11px] font-semibold text-amber-700" vid="179">Collection</span>
+                            </div>
+                            <button class="inline-flex h-8 items-center justify-center rounded-md border border-slate-200 bg-white px-3 text-xs font-medium text-slate-900 shadow-sm transition-colors hover:bg-slate-100 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950" vid="180">
+                                Details
+                            </button>
+                        </div>
+                        <div class="grid grid-cols-3 gap-2" vid="181">
+                            <div class="flex flex-col items-start gap-1 rounded-lg bg-slate-50 p-2.5" vid="182">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-500 mb-0.5" vid="183"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2" vid="184"></path><path d="M15 18H9" vid="185"></path><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14" vid="186"></path><circle cx="17" cy="18" r="2" vid="187"></circle><circle cx="7" cy="18" r="2" vid="188"></circle></svg>
+                                <span class="text-xs font-medium text-slate-700" vid="189">Van</span>
+                            </div>
+                            <div class="flex flex-col items-start gap-1 rounded-lg bg-slate-50 p-2.5" vid="190">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-500 mb-0.5" vid="191"><path d="m7.5 4.27 9 5.15" vid="192"></path><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z" vid="193"></path><path d="m3.3 7 8.7 5 8.7-5" vid="194"></path><path d="M12 22V12" vid="195"></path></svg>
+                                <span class="text-xs font-medium text-slate-700" vid="196">2 stops</span>
+                            </div>
+                            <div class="flex flex-col items-start gap-1 rounded-lg bg-slate-50 p-2.5" vid="197">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-500 mb-0.5" vid="198"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z" vid="199"></path><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z" vid="200"></path><path d="M7 21h10" vid="201"></path><path d="M12 3v18" vid="202"></path><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2" vid="203"></path></svg>
+                                <span class="text-xs font-medium text-slate-700" vid="204">90 kg</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="rounded-xl border border-slate-200 bg-white p-4 shadow-sm transition-all hover:border-slate-300" vid="205">
+                        <div class="mb-4 flex items-center justify-between" vid="206">
+                            <div class="flex items-center gap-3" vid="207">
+                                <span class="font-semibold text-slate-900" vid="208">R-326</span>
+                                <span class="inline-flex items-center rounded-full border border-transparent bg-blue-50 px-2 py-0.5 text-[11px] font-semibold text-blue-700" vid="209">Assigned</span>
+                            </div>
+                            <button class="inline-flex h-8 items-center justify-center rounded-md border border-slate-200 bg-white px-3 text-xs font-medium text-slate-900 shadow-sm transition-colors hover:bg-slate-100 hover:text-slate-900 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-slate-950" vid="210">
+                                Details
+                            </button>
+                        </div>
+                        <div class="grid grid-cols-3 gap-2" vid="211">
+                            <div class="flex flex-col items-start gap-1 rounded-lg bg-slate-50 p-2.5" vid="212">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-500 mb-0.5" vid="213"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2" vid="214"></path><path d="M15 18H9" vid="215"></path><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14" vid="216"></path><circle cx="17" cy="18" r="2" vid="217"></circle><circle cx="7" cy="18" r="2" vid="218"></circle></svg>
+                                <span class="text-xs font-medium text-slate-700" vid="219">Van</span>
+                            </div>
+                            <div class="flex flex-col items-start gap-1 rounded-lg bg-slate-50 p-2.5" vid="220">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-500 mb-0.5" vid="221"><path d="m7.5 4.27 9 5.15" vid="222"></path><path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z" vid="223"></path><path d="m3.3 7 8.7 5 8.7-5" vid="224"></path><path d="M12 22V12" vid="225"></path></svg>
+                                <span class="text-xs font-medium text-slate-700" vid="226">5 stops</span>
+                            </div>
+                            <div class="flex flex-col items-start gap-1 rounded-lg bg-slate-50 p-2.5" vid="227">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-slate-500 mb-0.5" vid="228"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z" vid="229"></path><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z" vid="230"></path><path d="M7 21h10" vid="231"></path><path d="M12 3v18" vid="232"></path><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2" vid="233"></path></svg>
+                                <span class="text-xs font-medium text-slate-700" vid="234">220 kg</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+        </div>
+    </main>
+
+    
+    <nav class="fixed bottom-0 left-0 right-0 z-50 flex h-16 w-full items-center justify-around border-t border-slate-200 bg-white/80 backdrop-blur-md" vid="235">
+        <button class="flex h-full w-full flex-col items-center justify-center gap-1 text-[#1B4332] hover:bg-slate-50 transition-colors" vid="236">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" vid="237">
+                <rect width="7" height="9" x="3" y="3" rx="1" vid="238"></rect>
+                <rect width="7" height="5" x="14" y="3" rx="1" vid="239"></rect>
+                <rect width="7" height="9" x="14" y="12" rx="1" vid="240"></rect>
+                <rect width="7" height="5" x="3" y="16" rx="1" vid="241"></rect>
+            </svg>
+            <span class="text-[10px] font-medium" vid="242">Dashboard</span>
+        </button>
+        <button class="flex h-full w-full flex-col items-center justify-center gap-1 text-slate-400 hover:bg-slate-50 hover:text-slate-600 transition-colors" vid="243">
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" vid="244">
+                <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" vid="245"></path>
+                <circle cx="12" cy="7" r="4" vid="246"></circle>
+            </svg>
+            <span class="text-[10px] font-medium" vid="247">Account</span>
+        </button>
+    </nav>
+
+
+</body></html>

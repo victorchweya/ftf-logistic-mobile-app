@@ -1,0 +1,46 @@
+---
+import AppShell from "../components/app/AppShell.astro";
+import NotificationCard from "../components/app/NotificationCard.astro";
+import PageHeader from "../components/app/PageHeader.astro";
+import { driverInitials, driverName, navItems } from "../data/dashboard";
+import { notifications } from "../data/notifications";
+import Layout from "../layouts/Layout.astro";
+
+const notificationsNavItems = navItems.map((item) => ({
+	...item,
+	isActive: false,
+}));
+---
+
+<Layout title="Notifications - Hybrid Logistics">
+	<AppShell
+		driverName={driverName}
+		driverInitials={driverInitials}
+		navItems={notificationsNavItems}
+		contentClass="space-y-4 p-4">
+		<PageHeader slot="header" title="Notifications" backHref="/" />
+
+		<section class="space-y-4" aria-labelledby="recent-activity-title">
+			<div class="flex items-center justify-between gap-3 px-1">
+				<h2
+					id="recent-activity-title"
+					class="text-xs font-semibold uppercase tracking-[0.08em] text-text-secondary">
+					Recent Activity
+				</h2>
+				<button
+					type="button"
+					class="shrink-0 text-xs font-semibold text-brand transition-colors duration-200 hover:text-brand/80 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand">
+					Mark all as read
+				</button>
+			</div>
+
+			<div class="space-y-2">
+				{
+					notifications.map((notification) => (
+						<NotificationCard notification={notification} />
+					))
+				}
+			</div>
+		</section>
+	</AppShell>
+</Layout>

@@ -1,0 +1,174 @@
+@import "tailwindcss";
+
+@theme {
+	--color-green-50: #f0f6f3;
+	--color-green-100: #dfeddf;
+	--color-green-200: #bfdcc0;
+	--color-green-300: #85a687;
+	--color-green-400: #4a7c5a;
+	--color-green-500: #1e4a35;
+	--color-green-600: #1a3f2e;
+	--color-green-700: #163327;
+	--color-green-800: #122c20;
+	--color-green-900: #0e1f16;
+
+	--color-orange-50: #fdfaf5;
+	--color-orange-100: #f7e6d4;
+	--color-orange-200: #efc9a4;
+	--color-orange-300: #ebc194;
+	--color-orange-400: #e0a86a;
+	--color-orange-500: #d78228;
+	--color-orange-600: #c47423;
+	--color-orange-700: #ac6820;
+	--color-orange-800: #8d5317;
+	--color-orange-900: #814e18;
+
+	--color-indigo-50: #f7f8fd;
+	--color-indigo-100: #e8eafc;
+	--color-indigo-200: #d0d5f7;
+	--color-indigo-300: #bac1f5;
+	--color-indigo-400: #8c98ee;
+	--color-indigo-500: #707abe;
+	--color-indigo-600: #6470b5;
+	--color-indigo-700: #545b8f;
+	--color-indigo-800: #454873;
+	--color-indigo-900: #3a3e57;
+
+	--color-neutral-50: #f7f7f7;
+	--color-neutral-100: #f9f9f9;
+	--color-neutral-200: #e6e6e6;
+	--color-neutral-300: #d0d0d0;
+	--color-neutral-400: #808080;
+	--color-neutral-500: #666666;
+	--color-neutral-600: #404040;
+	--color-neutral-700: #333333;
+	--color-neutral-800: #1a1a1a;
+	--color-neutral-900: #080808;
+
+	--color-red-50: #fef5f5;
+	--color-red-100: #fbeaea;
+	--color-red-200: #f4bfbf;
+	--color-red-300: #e57373;
+	--color-red-400: #d64545;
+	--color-red-500: #b71c1c;
+	--color-red-600: #a01717;
+	--color-red-700: #8b1515;
+	--color-red-800: #6d0e0e;
+	--color-red-900: #5a0a0a;
+
+	--color-yellow-50: #fffaf0;
+	--color-yellow-100: #fcf6de;
+	--color-yellow-200: #f9ecbd;
+	--color-yellow-300: #f5e091;
+	--color-yellow-400: #ddca83;
+	--color-yellow-500: #ac9d66;
+	--color-yellow-600: #9d8c5c;
+	--color-yellow-700: #8e7b51;
+	--color-yellow-800: #6b5e3f;
+	--color-yellow-900: #564930;
+
+	--color-olive-50: #f9faf6;
+	--color-olive-100: #f3f5e7;
+	--color-olive-200: #dae2b6;
+	--color-olive-300: #c2ce86;
+	--color-olive-400: #9ba56b;
+	--color-olive-500: #747c50;
+	--color-olive-600: #6b7248;
+	--color-olive-700: #5c6440;
+	--color-olive-800: #475030;
+	--color-olive-900: #343a24;
+
+	--color-brown-50: #f9f7f6;
+	--color-brown-100: #efedec;
+	--color-brown-200: #dbd3d0;
+	--color-brown-300: #a99e99;
+	--color-brown-400: #8b7f7a;
+	--color-brown-500: #7b6a62;
+	--color-brown-600: #6e5f58;
+	--color-brown-700: #5f5149;
+	--color-brown-800: #4c352b;
+	--color-brown-900: #3d2a20;
+
+	--color-violet-50: #f8f6f9;
+	--color-violet-100: #eddde6;
+	--color-violet-200: #dabacc;
+	--color-violet-300: #bf87a6;
+	--color-violet-400: #a870a8;
+	--color-violet-500: #a35380;
+	--color-violet-600: #944b76;
+	--color-violet-700: #824266;
+	--color-violet-800: #6b3655;
+	--color-violet-900: #532a43;
+
+	--color-purple-50: #f8f5fb;
+	--color-purple-100: #e9dceb;
+	--color-purple-200: #d4b9d6;
+	--color-purple-300: #b58bbb;
+	--color-purple-400: #9d77a8;
+	--color-purple-500: #8d5370;
+	--color-purple-600: #804c66;
+	--color-purple-700: #704055;
+	--color-purple-800: #573243;
+	--color-purple-900: #412433;
+
+	--color-brand: var(--color-green-500);
+	--color-brand-soft: var(--color-green-100);
+	--color-app: var(--color-neutral-50);
+	--color-surface: var(--color-neutral-100);
+	--color-surface-muted: var(--color-neutral-50);
+	--color-border: var(--color-neutral-200);
+	--color-text-primary: var(--color-neutral-700);
+	--color-text-strong: var(--color-neutral-900);
+	--color-text-secondary: var(--color-neutral-500);
+	--color-text-muted: var(--color-neutral-400);
+	--color-status-active: var(--color-green-500);
+	--color-status-completed: var(--color-olive-600);
+	--color-status-assigned: var(--color-indigo-600);
+	--color-status-collection: var(--color-orange-700);
+	--color-status-warning: var(--color-orange-600);
+	--color-status-error: var(--color-red-500);
+	--color-status-info: var(--color-indigo-600);
+	--color-notification: var(--color-red-400);
+	--shadow-card: 0 1px 2px 0 rgb(8 8 8 / 0.06);
+	--shadow-card-hover: 0 8px 24px -18px rgb(8 8 8 / 0.35);
+}
+
+@layer base {
+	* {
+		box-sizing: border-box;
+	}
+
+	html {
+		min-width: 320px;
+		min-height: 100%;
+		background: var(--color-app);
+	}
+
+	body {
+		margin: 0;
+		min-height: 100%;
+		font-family:
+			ui-sans-serif,
+			system-ui,
+			-apple-system,
+			BlinkMacSystemFont,
+			"Segoe UI",
+			sans-serif;
+	}
+
+	button,
+	a {
+		-webkit-tap-highlight-color: transparent;
+	}
+}
+
+@layer utilities {
+	.no-scrollbar::-webkit-scrollbar {
+		display: none;
+	}
+
+	.no-scrollbar {
+		-ms-overflow-style: none;
+		scrollbar-width: none;
+	}
+}

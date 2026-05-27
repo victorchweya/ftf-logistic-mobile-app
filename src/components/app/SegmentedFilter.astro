@@ -1,0 +1,35 @@
+---
+interface Props {
+	filters: string[];
+	selected?: string;
+}
+
+const { filters, selected = 'All' } = Astro.props;
+---
+
+<div
+	class="inline-flex h-10 w-full items-center justify-center rounded-lg bg-neutral-200/60 p-1 text-text-secondary"
+	role="tablist"
+	aria-label="Route filters"
+>
+	{
+		filters.map((filter) => {
+			const isSelected = filter === selected;
+
+			return (
+				<button
+					type="button"
+					role="tab"
+					aria-selected={isSelected}
+					class={`inline-flex h-8 min-w-0 flex-1 items-center justify-center whitespace-nowrap rounded-md px-2 text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 ${
+						isSelected
+							? 'bg-surface text-text-strong shadow-sm'
+							: 'text-text-secondary hover:bg-neutral-200/50 hover:text-text-primary'
+					}`}
+				>
+					<span class="truncate">{filter}</span>
+				</button>
+			);
+		})
+	}
+</div>

@@ -1,0 +1,65 @@
+---
+type IconName =
+	'account' |
+	'bell' |
+	'camera' |
+	'check-circle' |
+	'chevron-left' |
+	'clock' |
+	'dashboard' |
+	'location' |
+	'map' |
+	'message' |
+	'package' |
+	'route' |
+	'scale' |
+	'settings' |
+	'truck';
+
+type IconWeight = 'regular' | 'bold';
+
+interface Props {
+	name: IconName;
+	class?: string;
+	strokeWidth?: number;
+	title?: string;
+	weight?: IconWeight;
+}
+
+const {
+	name,
+	class: className = 'text-xl',
+	strokeWidth = 2,
+	title,
+	weight,
+} = Astro.props;
+
+const phosphorIconMap: Record<IconName, string> = {
+	account: 'user',
+	bell: 'bell',
+	camera: 'camera',
+	'check-circle': 'check-circle',
+	'chevron-left': 'caret-left',
+	clock: 'clock',
+	dashboard: 'squares-four',
+	location: 'map-pin',
+	map: 'map-trifold',
+	message: 'chat-centered',
+	package: 'cube',
+	route: 'road-horizon',
+	scale: 'scales',
+	settings: 'gear',
+	truck: 'truck',
+};
+
+const resolvedWeight = weight ?? (strokeWidth >= 2.5 ? 'bold' : 'regular');
+const weightClass = resolvedWeight === 'bold' ? 'ph-bold' : 'ph';
+const iconClass = `inline-flex shrink-0 leading-none ${weightClass} ph-${phosphorIconMap[name]} ${className}`;
+---
+
+<i
+	class={iconClass}
+	aria-hidden={title ? undefined : 'true'}
+	aria-label={title}
+	role={title ? 'img' : undefined}
+></i>

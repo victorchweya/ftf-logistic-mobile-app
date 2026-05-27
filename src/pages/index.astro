@@ -1,11 +1,56 @@
 ---
-import Welcome from '../components/Welcome.astro';
+import AppShell from '../components/app/AppShell.astro';
+import CurrentActionCard from '../components/app/CurrentActionCard.astro';
+import MetricCard from '../components/app/MetricCard.astro';
+import RouteCard from '../components/app/RouteCard.astro';
+import SegmentedFilter from '../components/app/SegmentedFilter.astro';
+import {
+	currentObjective,
+	driverInitials,
+	driverName,
+	metrics,
+	navItems,
+	routeFilters,
+	routes,
+} from '../data/dashboard';
 import Layout from '../layouts/Layout.astro';
-
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
 ---
 
-<Layout>
-	<Welcome />
+<Layout title="Hybrid Logistics Dashboard">
+	<AppShell driverName={driverName} driverInitials={driverInitials} navItems={navItems}>
+		<section class="space-y-1" aria-labelledby="dashboard-title">
+			<h1 id="dashboard-title" class="text-2xl font-semibold tracking-tight text-text-strong">
+				Hi, {driverName}
+			</h1>
+			<p class="text-sm text-text-secondary">Here's your route overview for today.</p>
+		</section>
+
+		<section class="grid grid-cols-2 gap-4" aria-label="Route summary">
+			{metrics.map((metric) => <MetricCard metric={metric} />)}
+		</section>
+
+		<section class="space-y-3" aria-labelledby="current-objective-title">
+			<h2
+				id="current-objective-title"
+				class="text-xs font-semibold uppercase tracking-[0.08em] text-text-secondary"
+			>
+				Current Objective
+			</h2>
+			<CurrentActionCard objective={currentObjective} />
+		</section>
+
+		<section class="space-y-4" aria-labelledby="routes-title">
+			<div class="flex items-center justify-between gap-3">
+				<h2 id="routes-title" class="text-lg font-semibold tracking-tight text-text-strong">
+					Your Routes
+				</h2>
+			</div>
+
+			<SegmentedFilter filters={routeFilters} selected="All" />
+
+			<div class="space-y-3">
+				{routes.map((route) => <RouteCard route={route} />)}
+			</div>
+		</section>
+	</AppShell>
 </Layout>
