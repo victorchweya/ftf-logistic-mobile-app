@@ -18,7 +18,11 @@ const isSupplier = stop?.taskType === 'collection';
 ---
 
 <Layout title={`${isSupplier ? 'Supplier' : 'Customer'} Proof - ${route.id}`}>
-	<main class="mx-auto flex h-dvh w-full max-w-md flex-col overflow-hidden bg-app text-text-primary shadow-2xl shadow-neutral-300/60">
+	<main
+		class="mx-auto flex h-dvh w-full max-w-md flex-col overflow-hidden bg-app text-text-primary shadow-2xl shadow-neutral-300/60"
+		data-proof-return-root
+		data-route-href={`/routes/${route.id}/`}
+		data-signature-href={`/routes/${route.id}/signature/`}>
 		<PageHeader title={isSupplier ? 'Supplier Proof' : 'Customer Proof'} backHref={`/routes/${route.id}/`} backLabel="Close proof" />
 		<div class="no-scrollbar flex-1 space-y-4 overflow-y-auto p-4 pb-32">
 			<RequirementBanner tone="info" icon="shield">
@@ -55,5 +59,29 @@ const isSupplier = stop?.taskType === 'collection';
 		<FixedFooterAction>
 			<ActionButton href={`/routes/${route.id}/`} full icon="check-circle">Mark Proof Ready</ActionButton>
 		</FixedFooterAction>
+
+		<script is:inline>
+			const proofReturnRoot = document.querySelector("[data-proof-return-root]");
+			const returnTo = new URLSearchParams(window.location.search).get("returnTo");
+			const isSafeReturn = returnTo?.startsWith("/") && !returnTo.startsWith("//");
+
+			if (proofReturnRoot && isSafeReturn) {
+				const routeHref = proofReturnRoot.dataset.routeHref;
+				const signatureHref = proofReturnRoot.dataset.signatureHref;
+				const signatureReturnHref = `${signatureHref}?returnTo=${encodeURIComponent(returnTo)}`;
+
+				proofReturnRoot.querySelectorAll("a").forEach((link) => {
+					const href = link.getAttribute("href");
+
+					if (href === routeHref) {
+						link.setAttribute("href", returnTo);
+					}
+
+					if (href === signatureHref) {
+						link.setAttribute("href", signatureReturnHref);
+					}
+				});
+			}
+		</script>
 	</main>
 </Layout>

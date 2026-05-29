@@ -15,7 +15,10 @@ const route = getRoute(Astro.params.routeId);
 ---
 
 <Layout title={`Signature - ${route.id}`}>
-	<main class="mx-auto flex h-dvh w-full max-w-md flex-col overflow-hidden bg-app text-text-primary shadow-2xl shadow-neutral-300/60">
+	<main
+		class="mx-auto flex h-dvh w-full max-w-md flex-col overflow-hidden bg-app text-text-primary shadow-2xl shadow-neutral-300/60"
+		data-proof-return-root
+		data-counterparty-href={`/routes/${route.id}/counterparty-proof/`}>
 		<PageHeader title="Customer Signature" backHref={`/routes/${route.id}/counterparty-proof/`} backLabel="Close signature" />
 		<div class="no-scrollbar flex-1 space-y-4 overflow-y-auto p-4 pb-32">
 			<RequirementBanner tone="info" icon="pen">
@@ -34,5 +37,21 @@ const route = getRoute(Astro.params.routeId);
 		<FixedFooterAction>
 			<ActionButton href={`/routes/${route.id}/counterparty-proof/`} variant="secondary" full>Close Without Saving</ActionButton>
 		</FixedFooterAction>
+
+		<script is:inline>
+			const proofReturnRoot = document.querySelector("[data-proof-return-root]");
+			const returnTo = new URLSearchParams(window.location.search).get("returnTo");
+			const isSafeReturn = returnTo?.startsWith("/") && !returnTo.startsWith("//");
+
+			if (proofReturnRoot && isSafeReturn) {
+				const counterpartyHref = proofReturnRoot.dataset.counterpartyHref;
+
+				proofReturnRoot.querySelectorAll("a").forEach((link) => {
+					if (link.getAttribute("href") === counterpartyHref) {
+						link.setAttribute("href", returnTo);
+					}
+				});
+			}
+		</script>
 	</main>
 </Layout>

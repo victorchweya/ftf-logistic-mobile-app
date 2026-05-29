@@ -1,0 +1,793 @@
+---
+import ActionButton from "../../../../../components/app/ActionButton.astro";
+import DataCard from "../../../../../components/app/DataCard.astro";
+import FixedFooterAction from "../../../../../components/app/FixedFooterAction.astro";
+import Icon from "../../../../../components/app/Icon.astro";
+import PageHeader from "../../../../../components/app/PageHeader.astro";
+import ProofAssetTile from "../../../../../components/app/ProofAssetTile.astro";
+import StatusChip from "../../../../../components/app/StatusChip.astro";
+import {
+	formatStopOrderWindow,
+	getCurrentStop,
+	getRoute,
+	routes,
+} from "../../../../../data/dashboard";
+import Layout from "../../../../../layouts/Layout.astro";
+
+export function getStaticPaths() {
+	return routes.flatMap((route) =>
+		route.stops.map((stop) => ({
+			params: {
+				routeId: route.id,
+				stopId: stop.id,
+			},
+		})),
+	);
+}
+
+const route = getRoute(Astro.params.routeId);
+const stop =
+	route.stops.find((candidate) => candidate.id === Astro.params.stopId) ??
+	getCurrentStop(route);
+const arrivalTime = stop.eta.match(/\d{1,2}:\d{2}/)?.[0] ?? stop.eta;
+const orderItems = stop.orderItems ?? [];
+const deliveryInstructions =
+	"Leave at reception desk if after 5 PM. Door code: 1234#.";
+const partialReasonOptions = [
+	"Weight",
+	"Not delivered",
+	"Colour / ripeness",
+	"Quality",
+	"Grade",
+	"Quantity",
+	"Other",
+];
+const failedReasonOptions = [
+	"Receiver unavailable",
+	"Site closed",
+	"Order refused",
+	"No access",
+	"Wrong address",
+	"Other",
+];
+const stopStatus =
+	stop.status === "arrived"
+		? "active"
+		: stop.status === "assigned"
+			? "pending"
+			: stop.status;
+const parseQuantityLabel = (quantityLabel: string) => {
+	const match = quantityLabel.match(/^(\d+(?:\.\d+)?)\s*(.*)$/);
+	const expectedQuantity = match ? Number(match[1]) : undefined;
+	const unitLabel = match?.[2]?.trim() ?? "";
+	const rejectedDefault =
+		typeof expectedQuantity === "number" && Number.isFinite(expectedQuantity)
+			? Math.min(1, expectedQuantity)
+			: "";
+
+	return {
+		expectedQuantity,
+		rejectedDefault,
+		unitLabel,
+	};
+};
+const deliveryItems = orderItems.map((item) => ({
+	...item,
+	quantity: parseQuantityLabel(item.quantityLabel),
+}));
+const routeStopCount = Math.max(1, route.stopCount || route.stops.length);
+const arrivalProgressStep = Math.min(stop.sequence, routeStopCount);
+const arrivalProgressPercent = (arrivalProgressStep / routeStopCount) * 100;
+const arrivalReturnTo = `/routes/${route.id}/stops/${stop.id}/arrival/`;
+const encodedArrivalReturnTo = encodeURIComponent(arrivalReturnTo);
+---
+
+<Layout title={`Stop #${stop.sequence} / ${route.id} / Arrival`}>
+	<main
+		class="mx-auto flex h-dvh w-full max-w-md flex-col overflow-hidden bg-app text-text-primary shadow-2xl shadow-neutral-300/60">
+		<PageHeader
+			title={`Stop #${stop.sequence} / ${route.id} / Arrival`}
+			backHref={`/routes/${route.id}/`}
+			backLabel="Back to route"
+		/>
+
+		<div class="no-scrollbar flex-1 space-y-4 overflow-y-auto p-4 pb-32">
+			<section class="space-y-3" aria-label="Route progress">
+				<div class="flex items-center justify-between gap-3">
+					<h2
+						class="text-xs font-semibold uppercase tracking-[0.08em] text-text-secondary">
+						Progress Tracker
+					</h2>
+					<p class="text-sm font-semibold text-brand">
+						{arrivalProgressStep} of {routeStopCount} Stops
+					</p>
+				</div>
+				<div class="h-1.5 overflow-hidden rounded-full bg-neutral-200">
+					<div
+						class="h-full rounded-full bg-brand"
+						style={`width: ${arrivalProgressPercent}%`}>
+					</div>
+				</div>
+			</section>
+
+			<DataCard as="section" class="space-y-4">
+				<div class="flex items-start gap-3">
+					<div class="min-w-0 flex-1">
+						<div class="flex items-start justify-between gap-2">
+							<h1
+								class="min-w-0 truncate text-lg font-semibold text-text-strong">
+								{stop.siteName}
+							</h1>
+							<StatusChip status={stopStatus} />
+						</div>
+						<p
+							class="mt-1 truncate text-xs font-medium text-text-secondary">
+							{formatStopOrderWindow(stop)}
+						</p>
+						<p class="mt-1 text-sm text-text-secondary">
+							{stop.address}
+						</p>
+					</div>
+				</div>
+				<div class="grid grid-cols-3 gap-2">
+					<div class="rounded-lg bg-surface-muted p-2.5">
+						<p
+							class="text-[11px] font-semibold uppercase tracking-[0.08em] text-text-secondary">
+							Sequence
+						</p>
+						<p class="mt-1 text-sm font-semibold text-text-strong">
+							#{stop.sequence}
+						</p>
+					</div>
+					<div class="rounded-lg bg-surface-muted p-2.5">
+						<p
+							class="text-[11px] font-semibold uppercase tracking-[0.08em] text-text-secondary">
+							ETA
+						</p>
+						<p class="mt-1 text-sm font-semibold text-text-strong">
+							{arrivalTime}
+						</p>
+					</div>
+					<div class="rounded-lg bg-surface-muted p-2.5">
+						<p
+							class="text-[11px] font-semibold uppercase tracking-[0.08em] text-text-secondary">
+							Weight
+						</p>
+						<p class="mt-1 text-sm font-semibold text-text-strong">
+							{stop.weightKg} KG
+						</p>
+					</div>
+				</div>
+
+				<div>
+					<div
+						class="flex items-center justify-between gap-3 rounded-lg border border-border p-3">
+						<div class="min-w-0">
+							<p
+								class="truncate text-sm font-semibold text-text-strong">
+								{stop.contactName}
+							</p>
+							<p
+								class="mt-0.5 truncate text-xs text-text-secondary">
+								{stop.contactPhone}
+							</p>
+						</div>
+						<div class="flex shrink-0 items-center gap-2">
+							<ActionButton
+								href={`tel:${stop.contactPhone}`}
+								variant="secondary"
+								size="compact"
+								icon="phone">
+								Call
+							</ActionButton>
+							<button
+								type="button"
+								class="inline-flex h-8 w-8 items-center justify-center rounded-md border border-border bg-surface text-text-primary shadow-sm transition-colors duration-200 hover:bg-neutral-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
+								aria-label="Directions">
+								<Icon
+									name="navigation"
+									class="text-base"
+									strokeWidth={2.25}
+								/>
+							</button>
+						</div>
+					</div>
+				</div>
+
+				<div
+					class="rounded-lg border border-yellow-200 bg-yellow-50 p-3">
+					<div
+						class="flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.08em] text-status-warning">
+						<Icon
+							name="warning"
+							class="text-sm"
+							strokeWidth={2.5}
+						/>
+						<p>Delivery Instructions</p>
+					</div>
+					<p class="mt-2 text-xs font-medium text-status-warning">
+						{deliveryInstructions}
+					</p>
+				</div>
+			</DataCard>
+
+			<div class="space-y-4" data-delivery-flow>
+				<DataCard as="section" class="space-y-4">
+					<div class="space-y-2">
+						<div>
+							<p
+								class="text-[11px] font-semibold uppercase tracking-[0.08em] text-text-secondary">
+								Delivery Outcome
+							</p>
+							<p class="mt-1 text-sm text-text-primary">
+								Choose the delivery result before completing
+								the stop.
+							</p>
+						</div>
+						<div
+							class="grid grid-cols-3 gap-2"
+							role="radiogroup"
+							aria-label="Delivery outcome">
+							<button
+								type="button"
+								class="delivery-outcome-button"
+								data-outcome-button="full"
+								data-selected="true"
+								role="radio"
+								aria-checked="true">
+								Full
+							</button>
+							<button
+								type="button"
+								class="delivery-outcome-button"
+								data-outcome-button="partial"
+								data-selected="false"
+								role="radio"
+								aria-checked="false">
+								Partial
+							</button>
+							<button
+								type="button"
+								class="delivery-outcome-button"
+								data-outcome-button="failed"
+								data-selected="false"
+								role="radio"
+								aria-checked="false">
+								Failed
+							</button>
+						</div>
+					</div>
+
+					<div class="space-y-3" data-outcome-panel="full">
+						<div class="flex items-center justify-between gap-3">
+							<p
+								class="text-[11px] font-semibold uppercase tracking-[0.08em] text-text-secondary">
+								Delivered Items
+							</p>
+							<p class="text-xs font-semibold text-brand">
+								All delivered
+							</p>
+						</div>
+						{
+							deliveryItems.length ? (
+								<div class="space-y-2">
+									{deliveryItems.map((item) => (
+										<div class="flex items-center gap-3 rounded-lg border border-border bg-surface p-3">
+											<div class="min-w-0 flex-1">
+												<p class="truncate text-sm font-semibold text-text-strong">
+													{item.name}
+												</p>
+												<p class="truncate text-xs text-text-secondary">
+													{item.sku} - {item.description}
+												</p>
+											</div>
+											<p class="shrink-0 text-right text-sm font-semibold text-text-primary">
+												{item.quantityLabel}
+											</p>
+										</div>
+									))}
+								</div>
+							) : (
+								<p class="rounded-lg bg-surface-muted p-3 text-sm text-text-secondary">
+									No order items listed for this stop.
+								</p>
+							)
+						}
+					</div>
+
+					<div
+						class="space-y-3"
+						data-outcome-panel="partial"
+						hidden>
+						<div>
+							<p
+								class="text-[11px] font-semibold uppercase tracking-[0.08em] text-text-secondary">
+								Partial Items
+							</p>
+							<p class="mt-1 text-sm text-text-primary">
+								Mark any item that was short, then enter the
+								rejected quantity and reason.
+							</p>
+						</div>
+						{
+							deliveryItems.length ? (
+								<div class="space-y-3">
+									{deliveryItems.map((item) => (
+										<div
+											class="partial-item-row cursor-pointer rounded-lg border border-border bg-surface p-3 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
+											data-partial-row
+											role="button"
+											tabindex="0"
+											aria-pressed="false">
+											<div class="flex items-start justify-between gap-3">
+												<div class="min-w-0">
+													<p class="truncate text-sm font-semibold text-text-strong">
+														{item.name}
+													</p>
+													<p class="truncate text-xs text-text-secondary">
+														{item.sku} - {item.description}
+													</p>
+													<p class="mt-1 text-xs font-medium text-text-secondary">
+														Expected: {item.quantityLabel}
+													</p>
+												</div>
+												<label class="inline-flex shrink-0 items-center">
+													<input
+														type="checkbox"
+														class="h-4 w-4 rounded border-border text-brand focus:ring-brand"
+														data-partial-checkbox
+														aria-label={`Mark ${item.name} as partial`}
+													/>
+												</label>
+											</div>
+											<div
+												class="mt-3 grid gap-2"
+												data-partial-fields
+												hidden>
+												<label class="block">
+													<span class="text-xs font-semibold text-text-secondary">
+														Rejected quantity
+													</span>
+													<div class="mt-1 flex overflow-hidden rounded-md border border-border bg-surface focus-within:border-brand focus-within:ring-2 focus-within:ring-brand/20">
+														<input
+															class="h-10 min-w-0 flex-1 bg-surface px-3 text-sm font-semibold text-text-strong outline-none"
+															inputmode="numeric"
+															type="number"
+															min="0"
+															max={
+																item.quantity
+																	.expectedQuantity
+															}
+															value={
+																item.quantity
+																	.rejectedDefault
+															}
+															data-partial-quantity
+															aria-label={`Rejected quantity for ${item.name}`}
+														/>
+														{
+															item.quantity
+																.unitLabel && (
+																<span class="flex h-10 items-center border-l border-border px-3 text-xs font-semibold text-text-secondary">
+																	{
+																		item
+																			.quantity
+																			.unitLabel
+																	}
+																</span>
+															)
+														}
+													</div>
+												</label>
+												<div class="space-y-2">
+													<p class="text-xs font-semibold text-text-secondary">
+														Reason
+													</p>
+													<div
+														class="flex flex-wrap gap-2"
+														aria-label={`Rejected reason for ${item.name}`}>
+														{partialReasonOptions.map((reason) => (
+															<button
+																type="button"
+																class="inline-flex min-h-8 items-center rounded-full border border-border bg-surface px-3 py-1.5 text-xs font-semibold text-brand shadow-sm transition-colors duration-200 hover:bg-brand/10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+																data-partial-reason
+																data-selected="false"
+																aria-pressed="false">
+																{reason}
+															</button>
+														))}
+													</div>
+												</div>
+											</div>
+										</div>
+									))}
+								</div>
+							) : (
+								<p class="rounded-lg bg-surface-muted p-3 text-sm text-text-secondary">
+									No order items listed for partial delivery.
+								</p>
+							)
+						}
+						<div
+							class="rounded-lg border border-yellow-200 bg-yellow-50 p-3 text-xs font-medium text-status-warning"
+							data-pod-locked>
+							Select at least one partial item and add its
+							rejected quantity and reason to unlock POD.
+						</div>
+					</div>
+
+					<div
+						class="space-y-3"
+						data-outcome-panel="failed"
+						hidden>
+						<div>
+							<p
+								class="text-[11px] font-semibold uppercase tracking-[0.08em] text-text-secondary">
+								Failure Reason
+							</p>
+							<p class="mt-1 text-sm text-text-primary">
+								Record why no delivery happened before leaving
+								the stop.
+							</p>
+						</div>
+						<div class="space-y-2">
+							<p class="text-xs font-semibold text-text-secondary">
+								Reason for failed delivery
+							</p>
+							<div class="flex flex-wrap gap-2">
+								{
+									failedReasonOptions.map((reason) => (
+										<button
+											type="button"
+											class="inline-flex min-h-8 items-center rounded-full border border-border bg-surface px-3 py-1.5 text-xs font-semibold text-status-error shadow-sm transition-colors duration-200 hover:bg-red-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-status-error focus-visible:ring-offset-2"
+											data-failure-reason
+											data-selected="false"
+											aria-pressed="false">
+											{reason}
+										</button>
+									))
+								}
+							</div>
+						</div>
+					</div>
+				</DataCard>
+
+				<div data-pod-section>
+					<DataCard as="section" class="space-y-3">
+						<div class="flex items-center justify-between gap-3">
+							<div>
+								<p
+									class="text-[11px] font-semibold uppercase tracking-[0.08em] text-text-secondary">
+									Proof Of Delivery
+								</p>
+								<p class="mt-1 text-sm text-text-primary">
+									Add a delivery photo and receiver signature.
+								</p>
+							</div>
+							<p class="shrink-0 text-xs font-semibold text-brand">
+								0/2
+							</p>
+						</div>
+						<ProofAssetTile
+							label="Delivery photo"
+							state="empty"
+							icon="camera"
+						/>
+						<ProofAssetTile
+							label="Receiver signature"
+							state="pending"
+							icon="pen"
+						/>
+						<div class="grid grid-cols-2 gap-2">
+							<ActionButton
+								href={`/routes/${route.id}/camera/?returnTo=${encodedArrivalReturnTo}`}
+								variant="secondary"
+								full
+								icon="camera">
+								Photo
+							</ActionButton>
+							<ActionButton
+								href={`/routes/${route.id}/counterparty-proof/?returnTo=${encodedArrivalReturnTo}`}
+								full
+								icon="pen">
+								Signature
+							</ActionButton>
+						</div>
+					</DataCard>
+				</div>
+			</div>
+		</div>
+
+		<FixedFooterAction>
+			<button
+				type="button"
+				class="arrival-complete-button inline-flex h-11 w-full items-center justify-center gap-2 rounded-md bg-brand px-4 text-sm font-semibold text-neutral-50 transition-colors duration-200 hover:bg-brand/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-60"
+				data-completion-button
+				data-outcome="full">
+				<Icon name="check-circle" class="text-base" />
+				<span data-completion-label>Complete Delivery</span>
+			</button>
+		</FixedFooterAction>
+	</main>
+
+	<style>
+		.delivery-outcome-button {
+			border: 1px solid var(--color-border);
+			border-radius: 0.375rem;
+			background: var(--color-surface);
+			color: var(--color-text-primary);
+			font-size: 0.875rem;
+			font-weight: 600;
+			height: 2.25rem;
+			padding-inline: 0.75rem;
+			transition:
+				background-color 160ms ease,
+				border-color 160ms ease,
+				color 160ms ease;
+		}
+
+		.delivery-outcome-button[data-selected="true"] {
+			background: var(--color-brand);
+			border-color: var(--color-brand);
+			color: var(--color-neutral-50);
+		}
+
+		.delivery-outcome-button[data-outcome-button="failed"][data-selected="true"] {
+			background: var(--color-status-error);
+			border-color: var(--color-status-error);
+		}
+
+		.partial-item-row[data-active="true"] {
+			background: var(--color-surface);
+			border-color: var(--color-brand);
+		}
+
+		.arrival-complete-button[data-outcome="failed"] {
+			background: var(--color-status-error);
+		}
+	</style>
+
+	<script is:inline>
+		const deliveryFlow = document.querySelector("[data-delivery-flow]");
+
+		if (deliveryFlow) {
+			const outcomeButtons = Array.from(
+				deliveryFlow.querySelectorAll("[data-outcome-button]"),
+			);
+			const outcomePanels = Array.from(
+				deliveryFlow.querySelectorAll("[data-outcome-panel]"),
+			);
+			const partialRows = Array.from(
+				deliveryFlow.querySelectorAll("[data-partial-row]"),
+			);
+			const podSection = deliveryFlow.querySelector("[data-pod-section]");
+			const podLocked = deliveryFlow.querySelector("[data-pod-locked]");
+			const failureReasonButtons = Array.from(
+				deliveryFlow.querySelectorAll("[data-failure-reason]"),
+			);
+			const completionButton = document.querySelector(
+				"[data-completion-button]",
+			);
+			const completionLabel = document.querySelector(
+				"[data-completion-label]",
+			);
+			let currentOutcome = "full";
+
+			const checkedPartialRows = () =>
+				partialRows.filter((row) => {
+					const checkbox = row.querySelector(
+						"[data-partial-checkbox]",
+					);
+
+					return checkbox?.checked;
+				});
+
+			const isPartialRowComplete = (row) => {
+				const quantity = row.querySelector("[data-partial-quantity]");
+				const hasReason = Boolean(
+					row.querySelector(
+						'[data-partial-reason][data-selected="true"]',
+					),
+				);
+
+				return Boolean(quantity?.value.trim() && hasReason);
+			};
+
+			const isPartialValid = () => {
+				const rows = checkedPartialRows();
+
+				return rows.length > 0 && rows.every(isPartialRowComplete);
+			};
+
+			const isFailedValid = () =>
+				failureReasonButtons.some(
+					(button) => button.dataset.selected === "true",
+				);
+
+			const setPartialRowState = (row) => {
+				const checkbox = row.querySelector("[data-partial-checkbox]");
+				const fields = row.querySelector("[data-partial-fields]");
+				const inputs = Array.from(
+					row.querySelectorAll(
+						"[data-partial-quantity], [data-partial-reason]",
+					),
+				);
+				const isActive = Boolean(checkbox?.checked);
+
+				row.dataset.active = String(isActive);
+				row.setAttribute("aria-pressed", String(isActive));
+
+				if (fields) {
+					fields.hidden = !isActive;
+				}
+
+				inputs.forEach((input) => {
+					input.disabled = !isActive;
+				});
+			};
+
+			const validateFlow = () => {
+				const partialValid = isPartialValid();
+				const failedValid = isFailedValid();
+				const showPod =
+					currentOutcome === "full" ||
+					(currentOutcome === "partial" && partialValid);
+				const canComplete =
+					currentOutcome === "full" ||
+					(currentOutcome === "partial" && partialValid) ||
+					(currentOutcome === "failed" && failedValid);
+
+				if (podSection) {
+					podSection.hidden = !showPod;
+				}
+
+				if (podLocked) {
+					podLocked.hidden =
+						currentOutcome !== "partial" || partialValid;
+				}
+
+				if (completionButton) {
+					completionButton.disabled = !canComplete;
+					completionButton.dataset.outcome = currentOutcome;
+				}
+
+				if (completionLabel) {
+					completionLabel.textContent =
+						currentOutcome === "failed"
+							? "Complete Failed Delivery"
+							: "Complete Delivery";
+				}
+			};
+
+			const setOutcome = (outcome) => {
+				currentOutcome = outcome;
+
+				outcomeButtons.forEach((button) => {
+					const isSelected =
+						button.dataset.outcomeButton === currentOutcome;
+					button.dataset.selected = String(isSelected);
+					button.setAttribute("aria-checked", String(isSelected));
+				});
+
+				outcomePanels.forEach((panel) => {
+					panel.hidden =
+						panel.dataset.outcomePanel !== currentOutcome;
+				});
+
+				validateFlow();
+			};
+
+			const toggleChip = (
+				button,
+				nextSelected,
+				selectedClasses,
+				defaultClasses,
+			) => {
+				button.dataset.selected = String(nextSelected);
+				button.setAttribute("aria-pressed", String(nextSelected));
+				selectedClasses.forEach((className) => {
+					button.classList.toggle(className, nextSelected);
+				});
+				defaultClasses.forEach((className) => {
+					button.classList.toggle(className, !nextSelected);
+				});
+			};
+
+			partialRows.forEach((row) => {
+				setPartialRowState(row);
+				const togglePartialRow = () => {
+					const checkbox = row.querySelector(
+						"[data-partial-checkbox]",
+					);
+
+					if (!checkbox) {
+						return;
+					}
+
+					checkbox.checked = !checkbox.checked;
+					setPartialRowState(row);
+					validateFlow();
+				};
+
+				row.addEventListener("click", (event) => {
+					const interactiveTarget = event.target.closest(
+						"input, textarea, button, label, [data-partial-fields]",
+					);
+
+					if (interactiveTarget) {
+						return;
+					}
+
+					togglePartialRow();
+				});
+				row.addEventListener("keydown", (event) => {
+					if (event.key !== "Enter" && event.key !== " ") {
+						return;
+					}
+
+					const interactiveTarget = event.target.closest(
+						"input, textarea, button, label, [data-partial-fields]",
+					);
+
+					if (interactiveTarget) {
+						return;
+					}
+
+					event.preventDefault();
+					togglePartialRow();
+				});
+				row.addEventListener("input", validateFlow);
+				row.addEventListener("change", () => {
+					setPartialRowState(row);
+					validateFlow();
+				});
+				row.querySelectorAll("[data-partial-reason]").forEach(
+					(reasonButton) => {
+						reasonButton.addEventListener("click", () => {
+							const isSelected =
+								reasonButton.dataset.selected === "true";
+							const nextSelected = !isSelected;
+							toggleChip(
+								reasonButton,
+								nextSelected,
+								["border-brand", "bg-brand", "text-neutral-50"],
+								["border-border", "bg-surface", "text-brand"],
+							);
+							validateFlow();
+						});
+					},
+				);
+			});
+
+			failureReasonButtons.forEach((reasonButton) => {
+				reasonButton.addEventListener("click", () => {
+					const nextSelected =
+						reasonButton.dataset.selected !== "true";
+					toggleChip(
+						reasonButton,
+						nextSelected,
+						[
+							"border-status-error",
+							"bg-status-error",
+							"text-neutral-50",
+						],
+						[
+							"border-border",
+							"bg-surface",
+							"text-status-error",
+						],
+					);
+					validateFlow();
+				});
+			});
+
+			outcomeButtons.forEach((button) => {
+				button.addEventListener("click", () => {
+					setOutcome(button.dataset.outcomeButton);
+				});
+			});
+
+			setOutcome("full");
+		}
+	</script>
+</Layout>

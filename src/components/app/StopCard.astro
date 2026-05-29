@@ -1,5 +1,5 @@
 ---
-import type { StopItem } from '../../data/dashboard';
+import { formatStopOrderWindow, type StopItem } from '../../data/dashboard';
 import Icon from './Icon.astro';
 import StatusChip from './StatusChip.astro';
 import StopDetailContent from './StopDetailContent.astro';
@@ -23,7 +23,7 @@ const isFinal = stop.status === 'completed' || stop.status === 'rejected';
 				<h3 class="truncate font-semibold text-text-strong">{stop.siteName}</h3>
 				<StatusChip status={stop.status} />
 			</div>
-			<p class="mt-1 truncate text-xs text-text-secondary">{stop.orderNumber} - {stop.timeSlot}</p>
+			<p class="mt-1 truncate text-xs text-text-secondary">{formatStopOrderWindow(stop)}</p>
 			<p class="mt-1 text-sm text-text-primary">{stop.address}</p>
 		</div>
 		<Icon

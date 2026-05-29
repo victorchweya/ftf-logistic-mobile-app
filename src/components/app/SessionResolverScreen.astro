@@ -1,0 +1,60 @@
+---
+import Icon from "./Icon.astro";
+
+interface Props {
+	message?: string;
+}
+
+const {
+	message = "Preparing your secure route workspace and checking saved login state.",
+} = Astro.props;
+---
+
+<main
+	class="mx-auto flex h-dvh w-full max-w-md flex-col items-center justify-center bg-app px-6 text-center text-text-primary"
+	data-session-resolver>
+	<div
+		class="flex h-14 w-14 items-center justify-center rounded-xl bg-brand text-neutral-50 shadow-card">
+		<Icon name="package" class="text-3xl" strokeWidth={2.5} />
+	</div>
+	<div
+		class="mt-6 h-10 w-10 animate-spin rounded-full border-4 border-brand-soft border-t-brand">
+	</div>
+	<h1 class="mt-5 text-lg font-semibold text-text-strong">
+		Bootstrapping session...
+	</h1>
+	<p class="mt-2 max-w-xs text-sm text-text-secondary">{message}</p>
+	<a href="/login/" class="mt-8 text-sm font-semibold text-brand">
+		Continue to login
+	</a>
+	<noscript>
+		<p class="mt-3 text-xs text-text-muted">
+			JavaScript is required for the prototype session redirect.
+		</p>
+	</noscript>
+</main>
+
+<script is:inline>
+	const sessionKey = "ftfDemoSession";
+	const loginPath = "/login/";
+	const dashboardPath = "/dashboard/";
+
+	try {
+		const storedSession = localStorage.getItem(sessionKey);
+
+		if (storedSession) {
+			JSON.parse(storedSession);
+			window.location.replace(dashboardPath);
+		} else {
+			window.location.replace(loginPath);
+		}
+	} catch {
+		try {
+			localStorage.removeItem(sessionKey);
+		} catch {
+			// Keep the static prototype navigable if browser storage is blocked.
+		}
+
+		window.location.replace(loginPath);
+	}
+</script>

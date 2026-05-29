@@ -1,58 +1,8 @@
 ---
-import AppShell from "../components/app/AppShell.astro";
-import Icon from "../components/app/Icon.astro";
-import MetricCard from "../components/app/MetricCard.astro";
-import NextStopBanner from "../components/app/NextStopBanner.astro";
-import RouteCard from "../components/app/RouteCard.astro";
-import {
-	currentObjective,
-	driverInitials,
-	driverName,
-	metrics,
-	navItems,
-	routes,
-} from "../data/dashboard";
+import SessionResolverScreen from "../components/app/SessionResolverScreen.astro";
 import Layout from "../layouts/Layout.astro";
 ---
 
-<Layout title="Hybrid Logistics Dashboard">
-	<AppShell
-		driverName={driverName}
-		driverInitials={driverInitials}
-		navItems={navItems}>
-		<section class="space-y-1" aria-labelledby="dashboard-title">
-			<h1
-				id="dashboard-title"
-				class="text-2xl font-semibold tracking-tight text-text-strong">
-				Hi, {driverName}
-			</h1>
-		</section>
-
-		<section class="grid grid-cols-2 gap-4" aria-label="Route summary">
-			{metrics.map((metric) => <MetricCard metric={metric} />)}
-		</section>
-
-		<section class="space-y-3" aria-labelledby="current-objective-title">
-			<h2
-				id="current-objective-title"
-				class="text-xs font-semibold uppercase tracking-[0.08em] text-text-secondary">
-				Current Focus
-			</h2>
-			<NextStopBanner objective={currentObjective} />
-		</section>
-
-		<section class="space-y-4" aria-labelledby="routes-title">
-			<div class="flex items-center justify-between gap-3">
-				<h2
-					id="routes-title"
-					class="text-lg font-semibold tracking-tight text-text-strong">
-					Your Routes
-				</h2>
-			</div>
-
-			<div class="space-y-3">
-				{routes.map((route) => <RouteCard route={route} />)}
-			</div>
-		</section>
-	</AppShell>
+<Layout title="Starting Hybrid Logistics">
+	<SessionResolverScreen />
 </Layout>

@@ -21,7 +21,7 @@ const accountNavItems = navItems.map((item) => ({
 		driverInitials={accountProfile.initials}
 		navItems={accountNavItems}
 	>
-		<section class="space-y-4">
+		<section class="space-y-4" data-account-page>
 			<DataCard>
 				<div class="flex items-start gap-4">
 					<div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-brand text-base font-bold text-neutral-50">
@@ -89,5 +89,21 @@ const accountNavItems = navItems.map((item) => ({
 			<ActionButton href="/login/" variant="danger" full icon="lock">Logout</ActionButton>
 			<p class="pb-2 text-center text-xs text-text-muted">{accountProfile.build}</p>
 		</section>
+
+		<script is:inline>
+			const accountPage = document.querySelector("[data-account-page]");
+
+			if (accountPage) {
+				accountPage.querySelectorAll('a[href="/login/"]').forEach((link) => {
+					link.addEventListener("click", () => {
+						try {
+							localStorage.removeItem("ftfDemoSession");
+						} catch {
+							// Logout still returns to login if browser storage is blocked.
+						}
+					});
+				});
+			}
+		</script>
 	</AppShell>
 </Layout>

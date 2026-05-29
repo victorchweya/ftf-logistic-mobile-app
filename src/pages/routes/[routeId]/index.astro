@@ -11,6 +11,7 @@ import StopDetailContent from "../../../components/app/StopDetailContent.astro";
 import type { StopItem } from "../../../data/dashboard";
 import {
 	accountProfile,
+	formatStopOrderWindow,
 	getRoute,
 	navItems,
 	routes,
@@ -126,7 +127,7 @@ const cta =
 				: route.status === "ready_to_complete"
 					? {
 							label: "Complete Route",
-							href: "/",
+							href: "/dashboard/",
 							icon: "check-circle",
 							disabled: false,
 						}
@@ -146,7 +147,7 @@ const cta =
 			titleClass={routeType.className}
 			titleIcon={routeType.icon}
 			status={route.status}
-			backHref="/"
+			backHref="/dashboard/"
 		/>
 
 		<div class="min-h-full bg-app" data-route-detail>
@@ -411,15 +412,9 @@ const cta =
 															</p>
 															<p class="mt-1 truncate text-xs font-medium text-neutral-500">
 																{
-																	stop
-																		.sourceStop
-																		.orderNumber
-																}{" "}
-																-{" "}
-																{
-																	stop
-																		.sourceStop
-																		.timeSlot
+																	formatStopOrderWindow(
+																		stop.sourceStop,
+																	)
 																}
 															</p>
 															<p class="mt-1 truncate text-xs text-text-secondary">
@@ -435,7 +430,7 @@ const cta =
 												</button>
 												{stop.state === "current" && (
 													<a
-														href={`/routes/${route.id}/`}
+														href={`/routes/${route.id}/stops/${stop.sourceStop.id}/arrival/`}
 														class="mt-3 inline-flex h-9 w-full items-center justify-center gap-2 rounded-md bg-brand px-4 text-sm font-semibold text-neutral-50 transition-colors duration-200 hover:bg-brand/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2">
 														<Icon
 															name="navigation"
@@ -514,8 +509,11 @@ const cta =
 											/>
 										</div>
 										<p class="mt-1 truncate text-xs text-text-secondary">
-											{stop.sourceStop.orderNumber} -{" "}
-											{stop.sourceStop.timeSlot}
+											{
+												formatStopOrderWindow(
+													stop.sourceStop,
+												)
+											}
 										</p>
 										<p class="mt-1 text-sm text-text-primary">
 											{stop.sourceStop.address}

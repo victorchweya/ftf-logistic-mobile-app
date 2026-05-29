@@ -8,7 +8,9 @@ import Layout from '../layouts/Layout.astro';
 ---
 
 <Layout title="Login - Hybrid Logistics">
-	<main class="mx-auto flex min-h-dvh w-full max-w-md flex-col bg-app px-4 py-8 text-text-primary">
+	<main
+		class="mx-auto flex min-h-dvh w-full max-w-md flex-col bg-app px-4 py-8 text-text-primary"
+		data-login-page>
 		<section class="mb-6 text-center">
 			<div class="mx-auto flex h-14 w-14 items-center justify-center rounded-xl bg-brand text-neutral-50 shadow-card">
 				<Icon name="package" class="text-3xl" strokeWidth={2.5} />
@@ -47,10 +49,10 @@ import Layout from '../layouts/Layout.astro';
 
 			<RequirementBanner tone="info" icon="fingerprint">Returning users can unlock with PIN or fingerprint after OTP verification.</RequirementBanner>
 
-			<ActionButton href="/" full icon="key">Verify OTP</ActionButton>
+			<ActionButton href="/dashboard/" full icon="key">Verify OTP</ActionButton>
 			<div class="grid grid-cols-2 gap-2">
-				<ActionButton href="/" variant="secondary" full icon="lock">Use PIN</ActionButton>
-				<ActionButton href="/" variant="secondary" full icon="fingerprint">Fingerprint</ActionButton>
+				<ActionButton href="/dashboard/" variant="secondary" full icon="lock">Use PIN</ActionButton>
+				<ActionButton href="/dashboard/" variant="secondary" full icon="fingerprint">Fingerprint</ActionButton>
 			</div>
 		</DataCard>
 
@@ -59,7 +61,11 @@ import Layout from '../layouts/Layout.astro';
 			<div class="grid grid-cols-3 gap-2">
 				{
 					demoAccounts.map((account) => (
-						<a href="/" class="rounded-lg border border-border bg-surface p-3 text-center shadow-card">
+						<a
+							href="/dashboard/"
+							class="rounded-lg border border-border bg-surface p-3 text-center shadow-card"
+							data-demo-label={account.label}
+							data-demo-role={account.role}>
 							<p class="text-xs font-bold text-text-strong">{account.label}</p>
 							<p class="mt-1 truncate text-[10px] text-text-secondary">{account.role}</p>
 						</a>
@@ -70,4 +76,29 @@ import Layout from '../layouts/Layout.astro';
 
 		<p class="mt-auto pt-8 text-center text-xs text-text-muted">Hybrid Logistics v0.4.2</p>
 	</main>
+
+	<script is:inline>
+		const loginPage = document.querySelector("[data-login-page]");
+		const sessionKey = "ftfDemoSession";
+
+		if (loginPage) {
+			loginPage.querySelectorAll('a[href="/dashboard/"]').forEach((link) => {
+				link.addEventListener("click", () => {
+					const label = link.dataset.demoLabel || "Remembered Account";
+					const role = link.dataset.demoRole || "Hybrid";
+					const session = {
+						role,
+						label,
+						startedAt: new Date().toISOString(),
+					};
+
+					try {
+						localStorage.setItem(sessionKey, JSON.stringify(session));
+					} catch {
+						// The link still navigates when storage is unavailable.
+					}
+				});
+			});
+		}
+	</script>
 </Layout>

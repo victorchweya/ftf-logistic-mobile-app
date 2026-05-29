@@ -16,6 +16,13 @@ export interface RouteFact {
 	value: string;
 }
 
+export interface StopOrderItem {
+	name: string;
+	sku: string;
+	description: string;
+	quantityLabel: string;
+}
+
 export interface StopItem {
 	id: string;
 	sequence: number;
@@ -32,6 +39,7 @@ export interface StopItem {
 	proofOutcome?: ProofOutcome;
 	proofSummary?: string;
 	requirements: string[];
+	orderItems?: StopOrderItem[];
 	isCurrent?: boolean;
 }
 
@@ -50,6 +58,14 @@ export interface RouteSummary {
 	proofSyncStatus: string;
 	dispatchUpdate?: string;
 	stops: StopItem[];
+}
+
+export function formatStopOrderWindow(
+	stop: Pick<StopItem, 'orderNumber' | 'timeSlot'>,
+) {
+	const compactTimeSlot = stop.timeSlot.replace(/\s*-\s*/g, '-');
+
+	return `${stop.orderNumber} / ${compactTimeSlot}`;
 }
 
 export interface DashboardMetric {
@@ -151,6 +167,26 @@ export const routes: RouteSummary[] = [
 				contactName: 'David Mwangi',
 				contactPhone: '+254 733 212 900',
 				requirements: ['Produce photo', 'Invoice photo', 'Receiver signature'],
+				orderItems: [
+					{
+						name: 'Tomatoes Crate',
+						sku: 'FTF-TOM-11',
+						description: 'Red tomatoes | Grade A',
+						quantityLabel: '3 crate',
+					},
+					{
+						name: 'Spinach Tray',
+						sku: 'FTF-SPN-12',
+						description: 'Fresh spinach | Washed',
+						quantityLabel: '4 tray',
+					},
+					{
+						name: 'Milk Crate',
+						sku: 'FTF-MLK-13',
+						description: 'Fresh milk | Chilled | Cold chain',
+						quantityLabel: '1 crate',
+					},
+				],
 				isCurrent: true,
 			},
 			{
@@ -294,11 +330,11 @@ export const currentObjective: CurrentObjective = {
 	primaryAddress: 'Nairobi Fresh Mart',
 	secondaryAddress: '123 Logistics Avenue, Business District',
 	ctaLabel: 'Open Current Stop',
-	href: '/routes/R-312/',
+	href: '/routes/R-312/stops/S-312-02/',
 };
 
 export const navItems: NavItem[] = [
-	{ label: 'Dashboard', icon: 'dashboard', isActive: true, href: '/' },
+	{ label: 'Dashboard', icon: 'dashboard', isActive: true, href: '/dashboard/' },
 	{ label: 'Routes', icon: 'route', isActive: false, href: '/routes/R-312/' },
 	{ label: 'Account', icon: 'account', isActive: false, href: '/account/' },
 ];
