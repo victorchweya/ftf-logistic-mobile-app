@@ -1,0 +1,20 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+	icon?: any;
+	title: string;
+	message: string;
+}
+
+const { icon = 'package', title, message } = Astro.props;
+---
+
+<div class="rounded-xl border border-dashed border-border bg-surface-muted px-4 py-8 text-center">
+	<div class="mx-auto flex h-11 w-11 items-center justify-center rounded-full bg-brand-soft text-brand">
+		<Icon name={icon} class="text-xl" />
+	</div>
+	<h2 class="mt-3 text-base font-semibold text-text-strong">{title}</h2>
+	<p class="mt-1 text-sm text-text-secondary">{message}</p>
+	<div class="mt-4"><slot /></div>
+</div>

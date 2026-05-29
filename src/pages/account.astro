@@ -1,0 +1,93 @@
+---
+import AccordionSection from '../components/app/AccordionSection.astro';
+import ActionButton from '../components/app/ActionButton.astro';
+import AppShell from '../components/app/AppShell.astro';
+import DataCard from '../components/app/DataCard.astro';
+import Icon from '../components/app/Icon.astro';
+import RequirementBanner from '../components/app/RequirementBanner.astro';
+import StatusChip from '../components/app/StatusChip.astro';
+import { accountProfile, navItems } from '../data/dashboard';
+import Layout from '../layouts/Layout.astro';
+
+const accountNavItems = navItems.map((item) => ({
+	...item,
+	isActive: item.label === 'Account',
+}));
+---
+
+<Layout title="Account - Hybrid Logistics">
+	<AppShell
+		driverName={accountProfile.name}
+		driverInitials={accountProfile.initials}
+		navItems={accountNavItems}
+	>
+		<section class="space-y-4">
+			<DataCard>
+				<div class="flex items-start gap-4">
+					<div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-brand text-base font-bold text-neutral-50">
+						{accountProfile.initials}
+					</div>
+					<div class="min-w-0 flex-1">
+						<div class="flex flex-wrap items-center gap-2">
+							<h1 class="text-xl font-semibold tracking-tight text-text-strong">{accountProfile.name}</h1>
+							<StatusChip status={accountProfile.role.toLowerCase()} />
+						</div>
+						<p class="mt-1 truncate text-sm text-text-secondary">{accountProfile.email}</p>
+						<p class="text-sm text-text-secondary">{accountProfile.phone}</p>
+					</div>
+				</div>
+			</DataCard>
+
+			<AccordionSection title="Account Details" summary="Role, vehicle, and route identity" open>
+				<div class="space-y-3 text-sm">
+					<div class="flex justify-between gap-3"><span class="text-text-secondary">Primary role</span><strong>{accountProfile.role}</strong></div>
+					<div class="flex justify-between gap-3"><span class="text-text-secondary">Assigned roles</span><strong>{accountProfile.assignedRoles.join(', ')}</strong></div>
+					<div class="flex justify-between gap-3"><span class="text-text-secondary">Vehicle</span><strong class="text-right">{accountProfile.vehicle}</strong></div>
+					<RequirementBanner tone="success" icon="cloud">Last synced 4 minutes ago. Route proof can continue offline.</RequirementBanner>
+				</div>
+			</AccordionSection>
+
+			<AccordionSection title="Support" summary="Dispatch contact and field issue help" open>
+				<div class="space-y-3">
+					<div class="flex items-center justify-between gap-3 rounded-lg bg-surface-muted p-3">
+						<div>
+							<p class="text-sm font-semibold text-text-strong">Dispatch WhatsApp</p>
+							<p class="text-xs text-text-secondary">{accountProfile.dispatchPhone}</p>
+						</div>
+						<ActionButton href={`https://wa.me/${accountProfile.dispatchPhone.replace(/[^0-9]/g, '')}`} variant="secondary" icon="message">Open</ActionButton>
+					</div>
+					<RequirementBanner tone="warning" icon="warning">For urgent failed delivery proof, call dispatch before leaving the site.</RequirementBanner>
+				</div>
+			</AccordionSection>
+
+			<AccordionSection title="Accessibility" summary="Theme, text size, motion, and biometric unlock">
+				<div class="space-y-4">
+					<div>
+						<p class="mb-2 text-xs font-semibold uppercase tracking-[0.08em] text-text-secondary">Theme</p>
+						<div class="grid grid-cols-3 gap-2">
+							{['System', 'Light', 'Dark'].map((theme) => <button class="h-10 rounded-md border border-border bg-surface-muted text-sm font-medium text-text-primary">{theme}</button>)}
+						</div>
+					</div>
+					<div>
+						<p class="mb-2 text-xs font-semibold uppercase tracking-[0.08em] text-text-secondary">Text Size</p>
+						<div class="grid grid-cols-3 gap-2">
+							{['Small', 'Default', 'Large', 'XL', 'XXL', 'XXXL'].map((size) => <button class="h-10 rounded-md border border-border bg-surface-muted text-xs font-medium text-text-primary">{size}</button>)}
+						</div>
+					</div>
+					<label class="flex items-center justify-between gap-3 rounded-lg bg-surface-muted p-3 text-sm font-semibold text-text-strong">
+						<span class="flex items-center gap-2"><Icon name="fingerprint" class="text-lg text-brand" /> Biometric Unlock</span>
+						<input type="checkbox" checked />
+					</label>
+					<label class="flex items-center justify-between gap-3 rounded-lg bg-surface-muted p-3 text-sm font-semibold text-text-strong">
+						<span class="flex items-center gap-2"><Icon name="settings" class="text-lg text-brand" /> Reduce Motion</span>
+						<input type="checkbox" />
+					</label>
+					<RequirementBanner tone="info" icon="fingerprint">Biometric is shown as enabled for this prototype device.</RequirementBanner>
+				</div>
+			</AccordionSection>
+
+			<ActionButton href="/login/" variant="danger" full icon="lock">Logout</ActionButton>
+			<p class="pb-2 text-center text-xs text-text-muted">{accountProfile.build}</p>
+		</section>
+	</AppShell>
+</Layout>

@@ -1,0 +1,16 @@
+---
+import Icon from '../components/app/Icon.astro';
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Starting Hybrid Logistics">
+	<main class="mx-auto flex h-dvh w-full max-w-md flex-col items-center justify-center bg-app px-6 text-center text-text-primary">
+		<div class="flex h-14 w-14 items-center justify-center rounded-xl bg-brand text-neutral-50 shadow-card">
+			<Icon name="package" class="text-3xl" strokeWidth={2.5} />
+		</div>
+		<div class="mt-6 h-10 w-10 animate-spin rounded-full border-4 border-brand-soft border-t-brand"></div>
+		<h1 class="mt-5 text-lg font-semibold text-text-strong">Bootstrapping session...</h1>
+		<p class="mt-2 max-w-xs text-sm text-text-secondary">Preparing your secure route workspace and checking saved login state.</p>
+		<a href="/login/" class="mt-8 text-sm font-semibold text-brand">Continue to login</a>
+	</main>
+</Layout>

@@ -1,0 +1,28 @@
+---
+interface Props {
+	empty?: boolean;
+}
+
+const { empty = false } = Astro.props;
+---
+
+<div class="relative h-48 overflow-hidden rounded-xl border border-border bg-neutral-50">
+	<div class="absolute inset-x-5 bottom-8 border-t border-dashed border-neutral-300"></div>
+	{
+		empty ? (
+			<p class="absolute inset-0 flex items-center justify-center text-sm font-medium text-text-muted">
+				Signature area
+			</p>
+		) : (
+			<svg viewBox="0 0 320 160" class="absolute inset-0 h-full w-full" aria-hidden="true">
+				<path
+					d="M42 94 C72 38, 95 126, 119 82 S165 60, 181 95 S231 64, 277 82"
+					fill="none"
+					stroke="#1E4A35"
+					stroke-width="5"
+					stroke-linecap="round"
+				/>
+			</svg>
+		)
+	}
+</div>

@@ -1,0 +1,60 @@
+---
+import ActionButton from '../../../components/app/ActionButton.astro';
+import CameraPreviewMock from '../../../components/app/CameraPreviewMock.astro';
+import DataCard from '../../../components/app/DataCard.astro';
+import FixedFooterAction from '../../../components/app/FixedFooterAction.astro';
+import PageHeader from '../../../components/app/PageHeader.astro';
+import ProofAssetTile from '../../../components/app/ProofAssetTile.astro';
+import RequirementBanner from '../../../components/app/RequirementBanner.astro';
+import { getRoute, routes } from '../../../data/dashboard';
+import Layout from '../../../layouts/Layout.astro';
+
+export function getStaticPaths() {
+	return routes.map((route) => ({ params: { routeId: route.id } }));
+}
+
+const route = getRoute(Astro.params.routeId);
+---
+
+<Layout title={`eTIMS Invoice - ${route.id}`}>
+	<main class="mx-auto flex h-dvh w-full max-w-md flex-col overflow-hidden bg-app text-text-primary shadow-2xl shadow-neutral-300/60">
+		<PageHeader title="eTIMS Invoice" backHref={`/routes/${route.id}/`} backLabel="Close eTIMS invoice" />
+		<div class="no-scrollbar flex-1 space-y-4 overflow-y-auto p-4 pb-32">
+			<RequirementBanner tone="brand" icon="qr">
+				Capture the supplier eTIMS QR link and attach the invoice document. They are related but saved separately.
+			</RequirementBanner>
+
+			<CameraPreviewMock mode="scan" />
+
+			<DataCard class="space-y-3">
+				<h2 class="font-semibold text-text-strong">Captured data</h2>
+				<label class="block">
+					<span class="text-sm font-semibold text-text-strong">eTIMS invoice link</span>
+					<input
+						class="mt-2 h-12 w-full rounded-md border border-border bg-surface px-3 text-xs text-text-strong outline-none focus:border-brand focus:ring-2 focus:ring-brand/20"
+						value="https://etims.kra.go.ke/invoice/POC-4410"
+					/>
+				</label>
+				<ProofAssetTile label="Invoice PDF" state="captured" icon="file" />
+			</DataCard>
+
+			<DataCard class="space-y-3">
+				<h2 class="font-semibold text-text-strong">Web import</h2>
+				<div class="grid grid-cols-2 gap-2">
+					<ActionButton variant="secondary" icon="camera" full>Import Image</ActionButton>
+					<ActionButton variant="secondary" icon="file" full>Upload PDF</ActionButton>
+				</div>
+			</DataCard>
+
+			<RequirementBanner tone="warning" icon="warning">
+				Scanner paused after QR capture. Clear data to scan again.
+			</RequirementBanner>
+		</div>
+		<FixedFooterAction>
+			<div class="grid grid-cols-2 gap-2">
+				<ActionButton href={`/routes/${route.id}/`} variant="secondary" full>Clear</ActionButton>
+				<ActionButton href={`/routes/${route.id}/`} full icon="check-circle">Save eTIMS</ActionButton>
+			</div>
+		</FixedFooterAction>
+	</main>
+</Layout>

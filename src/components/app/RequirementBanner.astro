@@ -1,0 +1,28 @@
+---
+import Icon from "./Icon.astro";
+
+interface Props {
+	tone?: "brand" | "warning" | "error" | "info" | "success";
+	icon?: any;
+	title?: string;
+}
+
+const { tone = "brand", icon = "check-circle", title } = Astro.props;
+
+const tones = {
+	brand: "bg-brand/5 text-brand border-brand/10",
+	warning: "bg-yellow-50 text-status-warning border-yellow-200",
+	error: "bg-red-50 text-status-error border-red-100",
+	info: "bg-indigo-50 text-status-info border-indigo-100",
+	success: "bg-olive-100 text-status-completed border-olive-200",
+};
+---
+
+<div
+	class={`flex items-start gap-1 rounded-lg border p-2 text-xs font-medium ${tones[tone]}`}>
+	<Icon name={icon} class="mt-0.5 text-sm" />
+	<div class="min-w-0">
+		{title && <p class="font-semibold">{title}</p>}
+		<div class="text-current/90"><slot /></div>
+	</div>
+</div>

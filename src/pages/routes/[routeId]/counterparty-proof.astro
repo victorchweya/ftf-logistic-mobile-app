@@ -1,0 +1,59 @@
+---
+import ActionButton from '../../../components/app/ActionButton.astro';
+import DataCard from '../../../components/app/DataCard.astro';
+import FixedFooterAction from '../../../components/app/FixedFooterAction.astro';
+import PageHeader from '../../../components/app/PageHeader.astro';
+import ProofAssetTile from '../../../components/app/ProofAssetTile.astro';
+import RequirementBanner from '../../../components/app/RequirementBanner.astro';
+import { getCurrentStop, getRoute, routes } from '../../../data/dashboard';
+import Layout from '../../../layouts/Layout.astro';
+
+export function getStaticPaths() {
+	return routes.map((route) => ({ params: { routeId: route.id } }));
+}
+
+const route = getRoute(Astro.params.routeId);
+const stop = getCurrentStop(route);
+const isSupplier = stop?.taskType === 'collection';
+---
+
+<Layout title={`${isSupplier ? 'Supplier' : 'Customer'} Proof - ${route.id}`}>
+	<main class="mx-auto flex h-dvh w-full max-w-md flex-col overflow-hidden bg-app text-text-primary shadow-2xl shadow-neutral-300/60">
+		<PageHeader title={isSupplier ? 'Supplier Proof' : 'Customer Proof'} backHref={`/routes/${route.id}/`} backLabel="Close proof" />
+		<div class="no-scrollbar flex-1 space-y-4 overflow-y-auto p-4 pb-32">
+			<RequirementBanner tone="info" icon="shield">
+				Hand the device over. Only counterparty proof fields are visible on this screen.
+			</RequirementBanner>
+
+			<DataCard class="space-y-4">
+				<label class="block">
+					<span class="text-sm font-semibold text-text-strong">{isSupplier ? 'Supplier representative name' : 'Receiver name'}</span>
+					<input
+						class="mt-2 h-12 w-full rounded-md border border-border bg-surface px-3 text-sm text-text-strong outline-none focus:border-brand focus:ring-2 focus:ring-brand/20"
+						value={isSupplier ? 'Grace Wanjiru' : 'David Mwangi'}
+					/>
+				</label>
+				<ProofAssetTile label="Signature" state="captured" icon="pen" />
+				<ActionButton href={`/routes/${route.id}/signature/`} variant="secondary" full icon="pen">Retake Signature</ActionButton>
+			</DataCard>
+
+			<DataCard class="space-y-4">
+				<h2 class="font-semibold text-text-strong">Customer feedback</h2>
+				<div class="grid grid-cols-5 gap-2">
+					{[1, 2, 3, 4, 5].map((rating) => <button class="h-10 rounded-md border border-border bg-surface-muted text-sm font-bold text-text-strong">{rating}</button>)}
+				</div>
+				<div class="flex flex-wrap gap-2">
+					{['On time', 'Friendly', 'Damaged item', 'Missing item'].map((tag) => <span class="rounded-full bg-surface-muted px-3 py-1 text-xs font-semibold text-text-secondary">{tag}</span>)}
+				</div>
+				<textarea class="min-h-20 w-full rounded-md border border-border bg-surface p-3 text-sm outline-none focus:border-brand focus:ring-2 focus:ring-brand/20">Receiver confirmed one crate was short.</textarea>
+			</DataCard>
+
+			<RequirementBanner tone="warning" icon="warning">
+				Validation example: low ratings require a feedback note before proof can be marked ready.
+			</RequirementBanner>
+		</div>
+		<FixedFooterAction>
+			<ActionButton href={`/routes/${route.id}/`} full icon="check-circle">Mark Proof Ready</ActionButton>
+		</FixedFooterAction>
+	</main>
+</Layout>

@@ -1,0 +1,27 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+	title: string;
+	summary: string;
+	open?: boolean;
+}
+
+const { title, summary, open = false } = Astro.props;
+---
+
+<details class="group rounded-xl border border-border bg-surface shadow-card" open={open}>
+	<summary class="flex min-h-14 cursor-pointer list-none items-center justify-between gap-3 px-4 py-3">
+		<div class="min-w-0">
+			<p class="font-semibold text-text-strong">{title}</p>
+			<p class="truncate text-xs text-text-secondary">{summary}</p>
+		</div>
+		<Icon
+			name="chevron-right"
+			class="text-lg text-text-muted transition-transform duration-200 group-open:rotate-90"
+		/>
+	</summary>
+	<div class="border-t border-border px-4 py-4">
+		<slot />
+	</div>
+</details>

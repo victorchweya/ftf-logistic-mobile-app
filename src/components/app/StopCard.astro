@@ -1,0 +1,36 @@
+---
+import type { StopItem } from '../../data/dashboard';
+import Icon from './Icon.astro';
+import StatusChip from './StatusChip.astro';
+import StopDetailContent from './StopDetailContent.astro';
+
+interface Props {
+	stop: StopItem;
+	routeId: string;
+}
+
+const { stop, routeId } = Astro.props;
+const isFinal = stop.status === 'completed' || stop.status === 'rejected';
+---
+
+<details class="group rounded-xl border border-border bg-surface shadow-card" open={stop.isCurrent || isFinal}>
+	<summary class="flex cursor-pointer list-none items-start gap-3 p-4">
+		<div class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-surface-muted text-xs font-bold text-text-secondary">
+			{stop.sequence}
+		</div>
+		<div class="min-w-0 flex-1">
+			<div class="flex items-center gap-2">
+				<h3 class="truncate font-semibold text-text-strong">{stop.siteName}</h3>
+				<StatusChip status={stop.status} />
+			</div>
+			<p class="mt-1 truncate text-xs text-text-secondary">{stop.orderNumber} - {stop.timeSlot}</p>
+			<p class="mt-1 text-sm text-text-primary">{stop.address}</p>
+		</div>
+		<Icon
+			name="chevron-right"
+			class="mt-1 text-lg text-text-muted transition-transform duration-200 group-open:rotate-90"
+		/>
+	</summary>
+
+	<StopDetailContent stop={stop} routeId={routeId} class="border-t border-border p-4" />
+</details>

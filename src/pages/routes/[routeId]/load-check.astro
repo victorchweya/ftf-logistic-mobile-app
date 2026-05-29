@@ -1,0 +1,62 @@
+---
+import ActionButton from '../../../components/app/ActionButton.astro';
+import DataCard from '../../../components/app/DataCard.astro';
+import FixedFooterAction from '../../../components/app/FixedFooterAction.astro';
+import PageHeader from '../../../components/app/PageHeader.astro';
+import QuantityStepper from '../../../components/app/QuantityStepper.astro';
+import RequirementBanner from '../../../components/app/RequirementBanner.astro';
+import { getRoute, loadCheckOrders, routes } from '../../../data/dashboard';
+import Layout from '../../../layouts/Layout.astro';
+
+export function getStaticPaths() {
+	return routes.map((route) => ({ params: { routeId: route.id } }));
+}
+
+const route = getRoute(Astro.params.routeId);
+---
+
+<Layout title={`Load Check - ${route.id}`}>
+	<main class="mx-auto flex h-dvh w-full max-w-md flex-col overflow-hidden bg-app text-text-primary shadow-2xl shadow-neutral-300/60">
+		<PageHeader title="Load Check" backHref={`/routes/${route.id}/`} backLabel="Close load check" />
+		<div class="no-scrollbar flex-1 space-y-4 overflow-y-auto p-4 pb-32">
+			<section class="space-y-1">
+				<h1 class="text-2xl font-semibold tracking-tight text-text-strong">{route.id}</h1>
+				<p class="text-sm text-text-secondary">Confirm loaded quantities before this assigned route can start.</p>
+			</section>
+
+			{
+				route.loadCheckRequired ? (
+					<RequirementBanner tone="warning" icon="list">
+						Load check is required because this route contains delivery quantities.
+					</RequirementBanner>
+				) : (
+					<RequirementBanner tone="success" icon="check-circle">
+						This route is not blocked by load check in the prototype data.
+					</RequirementBanner>
+				)
+			}
+
+			{
+				loadCheckOrders.map((order) => (
+					<DataCard class="space-y-3">
+						<div class="flex items-start justify-between gap-3">
+							<div class="min-w-0">
+								<h2 class="truncate font-semibold text-text-strong">{order.customer}</h2>
+								<p class="text-xs text-text-secondary">{order.orderNumber} - {order.timeSlot}</p>
+							</div>
+							<span class="text-xs font-semibold text-text-secondary">{order.weightKg} kg</span>
+						</div>
+						<div class="space-y-2">
+							{order.items.map((item) => (
+								<QuantityStepper label={item.name} dispatched={item.dispatched} loaded={item.loaded} />
+							))}
+						</div>
+					</DataCard>
+				))
+			}
+		</div>
+		<FixedFooterAction>
+			<ActionButton href={`/routes/${route.id}/`} full icon="check-circle">Submit Load Check</ActionButton>
+		</FixedFooterAction>
+	</main>
+</Layout>

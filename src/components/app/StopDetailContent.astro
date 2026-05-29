@@ -1,0 +1,87 @@
+---
+import type { StopItem } from '../../data/dashboard';
+import ActionButton from './ActionButton.astro';
+import ProofAssetTile from './ProofAssetTile.astro';
+import RequirementBanner from './RequirementBanner.astro';
+import StatusChip from './StatusChip.astro';
+
+interface Props {
+	stop: StopItem;
+	routeId: string;
+	class?: string;
+}
+
+const { stop, routeId, class: className = '' } = Astro.props;
+const canWorkProof = stop.status === 'arrived';
+const isFinal = stop.status === 'completed' || stop.status === 'rejected';
+---
+
+<div class={`space-y-4 ${className}`}>
+	<div class="grid grid-cols-2 gap-2">
+		<div class="rounded-lg bg-surface-muted p-2.5">
+			<p class="text-[11px] font-medium text-text-secondary">ETA</p>
+			<p class="text-xs font-semibold text-text-strong">{stop.eta}</p>
+		</div>
+		<div class="rounded-lg bg-surface-muted p-2.5">
+			<p class="text-[11px] font-medium text-text-secondary">Weight</p>
+			<p class="text-xs font-semibold text-text-strong">{stop.weightKg} kg</p>
+		</div>
+	</div>
+
+	<div class="flex items-center justify-between gap-3 rounded-lg bg-surface-muted p-3">
+		<div class="min-w-0">
+			<p class="truncate text-sm font-semibold text-text-strong">{stop.contactName}</p>
+			<p class="text-xs text-text-secondary">{stop.contactPhone}</p>
+		</div>
+		<ActionButton href={`tel:${stop.contactPhone}`} variant="secondary" icon="phone" size="compact">Call</ActionButton>
+	</div>
+
+	{
+		stop.status === 'pending' && (
+			<RequirementBanner tone="info" icon="clock">
+				Delivery assistant proof work unlocks after the driver marks arrival.
+			</RequirementBanner>
+		)
+	}
+
+	{
+		stop.status === 'pending' && stop.isCurrent && (
+			<ActionButton full icon="location">I've Arrived</ActionButton>
+		)
+	}
+
+	{
+		canWorkProof && (
+			<div class="space-y-3">
+				<RequirementBanner tone="brand" icon="camera" title="POC/POD task area">
+					Select outcome, attach required proof, then mark the stop ready for submission.
+				</RequirementBanner>
+				<div class="grid grid-cols-3 gap-2">
+					{['full', 'partial', 'failed'].map((outcome) => <StatusChip status={outcome} />)}
+				</div>
+				<ProofAssetTile label="Produce photo" state="captured" icon="camera" />
+				<ProofAssetTile label="Invoice photo" state="empty" icon="file" />
+				<ProofAssetTile label="Receiver signature" state="pending" icon="pen" />
+				<div class="grid grid-cols-2 gap-2">
+					<ActionButton href={`/routes/${routeId}/camera/`} variant="secondary" full icon="camera">Photo</ActionButton>
+					<ActionButton href={`/routes/${routeId}/counterparty-proof/`} full icon="pen">Customer Proof</ActionButton>
+				</div>
+				{
+					stop.requirements.some((requirement) => requirement.includes('eTIMS')) && (
+						<ActionButton href={`/routes/${routeId}/etims-invoice/`} variant="secondary" full icon="qr">
+							eTIMS Invoice
+						</ActionButton>
+					)
+				}
+			</div>
+		)
+	}
+
+	{
+		isFinal && (
+			<RequirementBanner tone={stop.status === 'completed' ? 'success' : 'error'} icon="check-circle">
+				{stop.proofSummary}
+			</RequirementBanner>
+		)
+	}
+</div>

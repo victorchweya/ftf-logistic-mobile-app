@@ -1,0 +1,31 @@
+---
+import Icon from './Icon.astro';
+import StatusChip from './StatusChip.astro';
+
+interface Props {
+	label: string;
+	state: 'empty' | 'captured' | 'pending' | 'failed';
+	icon?: 'camera' | 'pen' | 'file' | 'qr';
+}
+
+const { label, state, icon = 'camera' } = Astro.props;
+const stateText = {
+	empty: 'Needed',
+	captured: 'Captured',
+	pending: 'Pending sync',
+	failed: 'Failed',
+};
+---
+
+<div class="flex items-center justify-between gap-3 rounded-lg border border-border bg-surface-muted p-3">
+	<div class="flex min-w-0 items-center gap-3">
+		<div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-md bg-surface text-brand">
+			<Icon name={icon} class="text-lg" />
+		</div>
+		<div class="min-w-0">
+			<p class="truncate text-sm font-semibold text-text-strong">{label}</p>
+			<p class="text-xs text-text-secondary">{stateText[state]}</p>
+		</div>
+	</div>
+	<StatusChip status={state === 'captured' ? 'full' : state === 'failed' ? 'failed' : 'partial'} />
+</div>
