@@ -1,31 +1,39 @@
 ---
-import type { NavItem } from '../../data/dashboard';
-import BottomNav from './BottomNav.astro';
-import TopBar from './TopBar.astro';
+import type { NavItem } from "../../data/dashboard";
+import BottomNav from "./BottomNav.astro";
+import TopBar from "./TopBar.astro";
 
 interface Props {
 	driverName?: string;
 	driverInitials?: string;
 	navItems: NavItem[];
 	contentClass?: string;
+	showNav?: boolean;
 }
 
 const {
-	driverName = 'Harvey',
-	driverInitials = 'HH',
+	driverName = "Harvey",
+	driverInitials = "HH",
 	navItems,
-	contentClass = 'space-y-6 p-4',
+	contentClass = "space-y-6 p-4",
+	showNav = true,
 } = Astro.props;
 ---
 
-<div class="mx-auto flex h-dvh w-full max-w-md flex-col overflow-hidden bg-app text-text-primary shadow-2xl shadow-neutral-300/60">
+<div
+	class="mx-auto flex h-dvh w-full max-w-md flex-col overflow-hidden text-text-primary shadow-2xl shadow-neutral-300/60">
 	<slot name="header">
 		<TopBar driverName={driverName} driverInitials={driverInitials} />
 	</slot>
-	<main class="no-scrollbar flex-1 overflow-y-auto pb-24" id="main-content">
+	<main
+		class:list={[
+			'no-scrollbar flex-1 overflow-y-auto bg-app',
+			showNav ? 'pb-24' : 'pb-0',
+		]}
+		id="main-content">
 		<div class={contentClass}>
 			<slot />
 		</div>
 	</main>
-	<BottomNav items={navItems} />
+	{showNav && <BottomNav items={navItems} />}
 </div>

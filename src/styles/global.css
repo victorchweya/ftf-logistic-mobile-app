@@ -35,7 +35,7 @@
 	--color-indigo-900: #3a3e57;
 
 	--color-neutral-50: #f7f7f7;
-	--color-neutral-100: #f9f9f9;
+	--color-neutral-100: #f8fafc;
 	--color-neutral-200: #e6e6e6;
 	--color-neutral-300: #d0d0d0;
 	--color-neutral-400: #808080;
@@ -113,9 +113,9 @@
 
 	--color-brand: var(--color-green-500);
 	--color-brand-soft: var(--color-green-100);
-	--color-app: var(--color-neutral-50);
+	--color-app: var(--color-neutral-100);
 	--color-surface: var(--color-neutral-100);
-	--color-surface-muted: var(--color-neutral-50);
+	--color-surface-muted: var(--color-green-50);
 	--color-border: var(--color-neutral-200);
 	--color-text-primary: var(--color-neutral-700);
 	--color-text-strong: var(--color-neutral-900);

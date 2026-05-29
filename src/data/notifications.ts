@@ -5,9 +5,10 @@ export interface NotificationItem {
 	title: string;
 	message: string;
 	timestamp: string;
-	icon: 'package' | 'clock' | 'message' | 'settings' | 'check-circle';
+	icon: 'package' | 'clock' | 'message' | 'settings' | 'check-circle' | 'warning';
 	tone: NotificationTone;
 	unread: boolean;
+	routeId?: string;
 }
 
 export const notifications: NotificationItem[] = [
@@ -19,15 +20,27 @@ export const notifications: NotificationItem[] = [
 		icon: 'package',
 		tone: 'brand',
 		unread: true,
+		routeId: 'R-326',
 	},
 	{
 		id: 'schedule-r322',
 		title: 'Schedule Update',
-		message: 'Departure for <strong>R-322</strong> has been moved forward to 14:30 PM.',
+		message: 'Departure for <strong>R-322</strong> has been moved forward to 14:30.',
 		timestamp: '15m ago',
 		icon: 'clock',
 		tone: 'info',
 		unread: true,
+		routeId: 'R-322',
+	},
+	{
+		id: 'proof-r312',
+		title: 'Proof Pending Sync',
+		message: 'Two proof assets for <strong>R-312</strong> are waiting for connectivity.',
+		timestamp: '35m ago',
+		icon: 'warning',
+		tone: 'warning',
+		unread: false,
+		routeId: 'R-312',
 	},
 	{
 		id: 'delivery-note-123',
@@ -37,23 +50,25 @@ export const notifications: NotificationItem[] = [
 		icon: 'message',
 		tone: 'warning',
 		unread: false,
+		routeId: 'R-312',
 	},
 	{
 		id: 'system-maintenance',
 		title: 'System Maintenance',
-		message: 'Brief maintenance scheduled for tonight at 2:00 AM UTC. Connectivity may be intermittent.',
+		message: 'Brief maintenance scheduled tonight. Connectivity may be intermittent.',
 		timestamp: '3h ago',
 		icon: 'settings',
 		tone: 'neutral',
 		unread: false,
 	},
 	{
-		id: 'payout-aug-12-18',
-		title: 'Payout Processed',
-		message: 'Weekly earnings for Aug 12-18 have been processed and sent to your bank.',
+		id: 'route-318-closed',
+		title: 'Route Completed',
+		message: 'Route <strong>R-318</strong> was closed with all proof synced.',
 		timestamp: 'Yesterday',
 		icon: 'check-circle',
 		tone: 'success',
 		unread: false,
+		routeId: 'R-318',
 	},
 ];

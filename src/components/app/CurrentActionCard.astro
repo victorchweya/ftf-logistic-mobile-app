@@ -1,5 +1,6 @@
 ---
 import type { CurrentObjective } from '../../data/dashboard';
+import ActionButton from './ActionButton.astro';
 import Icon from './Icon.astro';
 import StatusChip from './StatusChip.astro';
 
@@ -33,11 +34,6 @@ const { objective } = Astro.props;
 			</div>
 		</div>
 
-		<button
-			type="button"
-			class="inline-flex h-11 w-full items-center justify-center rounded-md bg-brand px-6 text-sm font-medium text-neutral-50 shadow-sm transition-colors duration-200 hover:bg-brand/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
-		>
-			{objective.ctaLabel}
-		</button>
+		<ActionButton href={objective.href} full icon="arrow-right">{objective.ctaLabel}</ActionButton>
 	</div>
 </article>

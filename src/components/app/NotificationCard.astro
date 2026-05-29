@@ -18,10 +18,13 @@ const toneClasses: Record<NotificationTone, string> = {
 	neutral: "bg-neutral-200 text-text-primary",
 	success: "bg-olive-100 text-status-completed",
 };
+
+const href = notification.routeId ? `/routes/${notification.routeId}/` : undefined;
 ---
 
-<article
-	class={`relative rounded-xl border border-border bg-surface flex gap-4 p-4 shadow-card transition-colors duration-200 hover:bg-neutral-50 ${
+<a
+	href={href}
+	class={`relative block rounded-xl border border-border bg-surface p-4 shadow-card transition-colors duration-200 hover:bg-neutral-50 ${
 		notification.unread ? "" : "opacity-90"
 	}`}>
 	{
@@ -56,4 +59,4 @@ const toneClasses: Record<NotificationTone, string> = {
 			/>
 		</div>
 	</div>
-</article>
+</a>

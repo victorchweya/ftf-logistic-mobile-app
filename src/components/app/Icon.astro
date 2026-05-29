@@ -1,20 +1,49 @@
 ---
 type IconName =
 	'account' |
+	'arrow-right' |
 	'bell' |
+	'calendar' |
 	'camera' |
+	'check' |
 	'check-circle' |
 	'chevron-left' |
+	'chevron-right' |
 	'clock' |
+	'close' |
+	'cloud' |
+	'copy' |
 	'dashboard' |
+	'dots' |
+	'envelope' |
+	'file' |
+	'fingerprint' |
+	'home' |
+	'info' |
+	'key' |
+	'list' |
 	'location' |
+	'lock' |
 	'map' |
 	'message' |
+	'moon' |
+	'navigation' |
 	'package' |
+	'pen' |
+	'phone' |
+	'qr' |
+	'refresh' |
 	'route' |
 	'scale' |
+	'scan' |
 	'settings' |
-	'truck';
+	'share' |
+	'shield' |
+	'sun' |
+	'text' |
+	'truck' |
+	'warehouse' |
+	'warning';
 
 type IconWeight = 'regular' | 'bold';
 
@@ -36,20 +65,49 @@ const {
 
 const phosphorIconMap: Record<IconName, string> = {
 	account: 'user',
+	'arrow-right': 'arrow-right',
 	bell: 'bell',
+	calendar: 'calendar-blank',
 	camera: 'camera',
+	check: 'check',
 	'check-circle': 'check-circle',
 	'chevron-left': 'caret-left',
+	'chevron-right': 'caret-right',
 	clock: 'clock',
+	close: 'x',
+	cloud: 'cloud-check',
+	copy: 'copy',
 	dashboard: 'squares-four',
+	dots: 'dots-three-vertical',
+	envelope: 'envelope-simple',
+	file: 'file-text',
+	fingerprint: 'fingerprint',
+	home: 'house',
+	info: 'info',
+	key: 'key',
+	list: 'list-checks',
 	location: 'map-pin',
+	lock: 'lock-key',
 	map: 'map-trifold',
 	message: 'chat-centered',
+	moon: 'moon',
+	navigation: 'navigation-arrow',
 	package: 'cube',
+	pen: 'pen-nib',
+	phone: 'phone',
+	qr: 'qr-code',
+	refresh: 'arrows-clockwise',
 	route: 'road-horizon',
 	scale: 'scales',
+	scan: 'scan',
 	settings: 'gear',
+	share: 'share-network',
+	shield: 'shield-check',
+	sun: 'sun',
+	text: 'text-aa',
 	truck: 'truck',
+	warehouse: 'warehouse',
+	warning: 'warning',
 };
 
 const resolvedWeight = weight ?? (strokeWidth >= 2.5 ? 'bold' : 'regular');

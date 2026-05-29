@@ -1,7 +1,9 @@
 ---
-import type { RouteSummary } from '../../data/dashboard';
-import Icon from './Icon.astro';
-import StatusChip from './StatusChip.astro';
+import type { RouteSummary } from "../../data/dashboard";
+import FactGrid from "./FactGrid.astro";
+import Icon from "./Icon.astro";
+import RequirementBanner from "./RequirementBanner.astro";
+import StatusChip from "./StatusChip.astro";
 
 interface Props {
 	route: RouteSummary;
@@ -9,55 +11,73 @@ interface Props {
 
 const { route } = Astro.props;
 
+const routeTypeMeta = {
+	delivery: {
+		icon: "truck",
+		label: "Delivery Route",
+		className: "text-brand",
+	},
+	collection: {
+		icon: "warehouse",
+		label: "Collection Route",
+		className: "text-status-collection",
+	},
+	mixed: {
+		icon: "route",
+		label: "Mixed Route",
+		className: "text-status-info",
+	},
+} as const;
+
+const routeType = routeTypeMeta[route.kind];
+
 const facts = [
 	{
-		icon: 'truck',
-		label: route.vehicleType,
+		icon: "truck",
+		label: "Vehicle",
+		value: route.vehicleType,
 	},
 	{
-		icon: 'package',
-		label: `${route.stopCount} stops`,
+		icon: "package",
+		label: "Stops",
+		value: `${route.completedStops}/${route.stopCount}`,
 	},
 	{
-		icon: 'scale',
-		label: `${route.weightKg} kg`,
+		icon: "scale",
+		label: "Weight",
+		value: `${route.weightKg} kg`,
 	},
 ] as const;
 ---
 
-<article
-	class="rounded-xl border border-border bg-surface p-4 shadow-card transition-colors duration-200 hover:border-neutral-300"
->
-	<div class="mb-4 flex items-center justify-between gap-3">
-		<div class="flex min-w-0 items-center gap-3">
-			<h3 class="truncate font-semibold text-text-strong">{route.id}</h3>
+<a
+	href={`/routes/${route.id}/`}
+	aria-label={`View details for route ${route.id}`}
+	class="block rounded-xl border border-border bg-surface p-3 shadow-card transition duration-200 hover:border-neutral-300 hover:shadow-card-hover focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 active:bg-neutral-50">
+	<article>
+		<div class="mb-3 flex items-start justify-between gap-3">
+			<div class="flex min-w-0 items-center gap-1.5">
+				<div
+					class={`flex min-w-0 items-center gap-1.5 text-sm font-semibold ${routeType.className}`}>
+					<Icon name={routeType.icon} class="text-base" />
+					<h3 class="truncate text-base font-semibold">{route.id}</h3>
+					<span class="text-text-muted">-</span>
+					<span class="truncate">{routeType.label}</span>
+				</div>
+			</div>
 			<StatusChip status={route.status} />
 		</div>
-		<button
-			type="button"
-			class="inline-flex h-8 shrink-0 items-center justify-center rounded-md border border-border bg-surface px-3 text-xs font-medium text-text-primary shadow-sm transition-colors duration-200 hover:bg-neutral-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand"
-		>
-			Details
-		</button>
-	</div>
 
-	<div class="grid grid-cols-3 gap-2">
+		<FactGrid facts={facts} />
+
 		{
-			facts.map((fact) => (
-				<div class="flex min-w-0 flex-col items-start gap-1 rounded-lg bg-surface-muted p-2.5">
-					<Icon name={fact.icon} class="mb-0.5 text-base text-text-secondary" />
-					<span class="max-w-full truncate text-xs font-medium text-text-primary">{fact.label}</span>
+			route.requiresProofOfDelivery && (
+				<div class="mt-3">
+					<RequirementBanner icon="info">
+						{route.syncHint}
+					</RequirementBanner>
 				</div>
-			))
+			)
 		}
-	</div>
-
-	{
-		route.requiresProofOfDelivery && (
-			<div class="mt-3 flex items-center gap-2 rounded-md bg-brand/5 px-3 py-2 text-xs font-medium text-brand">
-				<Icon name="camera" class="text-sm" />
-				<span>Proof of delivery required</span>
-			</div>
-		)
-	}
-</article>
+	</article>
+</a>

@@ -1,22 +1,32 @@
 ---
-import type { RouteStatus } from '../../data/dashboard';
-
 interface Props {
-	status: RouteStatus;
+	status: string;
 }
 
 const { status } = Astro.props;
 
-const statusClasses: Record<RouteStatus, string> = {
-	Active: 'bg-status-active text-neutral-50',
-	Completed: 'bg-olive-100 text-status-completed',
-	Assigned: 'bg-indigo-100 text-status-assigned',
-	Collection: 'bg-orange-100 text-status-collection',
+const statusClasses: Record<string, string> = {
+	active: 'bg-status-active text-neutral-50',
+	completed: 'bg-olive-100 text-status-completed',
+	assigned: 'bg-indigo-100 text-status-assigned',
+	ready_to_complete: 'bg-yellow-100 text-status-warning',
+	collection: 'bg-orange-100 text-status-collection',
+	pending: 'bg-indigo-100 text-status-assigned',
+	arrived: 'bg-status-active text-neutral-50',
+	rejected: 'bg-red-100 text-status-error',
+	full: 'bg-olive-100 text-status-completed',
+	partial: 'bg-yellow-100 text-status-warning',
+	failed: 'bg-red-100 text-status-error',
 };
+
+const label = status
+	.split('_')
+	.map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+	.join(' ');
 ---
 
 <span
-	class={`inline-flex shrink-0 items-center rounded-full border border-transparent px-2 py-0.5 text-[11px] font-semibold leading-5 ${statusClasses[status]}`}
+	class={`inline-flex shrink-0 items-center rounded-full border border-transparent px-2 py-0.5 text-[11px] font-semibold leading-5 ${statusClasses[status] ?? 'bg-neutral-200 text-text-secondary'}`}
 >
-	{status}
+	{label}
 </span>
